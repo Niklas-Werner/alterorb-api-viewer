@@ -1,16 +1,19 @@
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory, History } from 'history';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { ExtraThunkArgument } from './actions';
-import { gamesReducer } from './games/reducers';
-import { globalReducer } from './global/reducers';
+import { dataReducer } from './data/reducers';
+import { uiReducer } from './ui/reducers';
 
-export const rootReducer = combineReducers({
-    global: globalReducer,
-    games: gamesReducer
+export const createRootReducer = (history: History) => combineReducers({
+    router: connectRouter(history),
+    ui: uiReducer,
+    data: dataReducer
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<ReturnType<typeof createRootReducer>>;
 
 declare module 'react-redux' {
     export interface DefaultRootState extends RootState {
@@ -18,18 +21,24 @@ declare module 'react-redux' {
 }
 
 export function configureStore(extraThunkArgument: ExtraThunkArgument, preloadedState: Partial<RootState> = {}) {
+    const history = createBrowserHistory();
+
     const logger = createLogger({});
 
     const store = createStore(
-        rootReducer,
+        createRootReducer(history),
         preloadedState,
         compose(
             applyMiddleware(
+                routerMiddleware(history),
                 thunk.withExtraArgument(extraThunkArgument),
                 logger // must be last middleware
             )
         )
     );
 
-    return { store };
+    return {
+        store,
+        history
+    };
 }

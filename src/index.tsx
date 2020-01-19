@@ -1,20 +1,21 @@
+import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BASE_PATH, Configuration, DefaultApi } from './api';
+import { DefaultApi } from './api';
 import App from './components/App';
 import './index.scss';
 import { configureStore } from './store';
 
-const api = new DefaultApi(new Configuration({
-    basePath: 'https://cors-anywhere.herokuapp.com/' + BASE_PATH
-}));
+const api = new DefaultApi();
 
-const { store } = configureStore({ api });
+const { store, history } = configureStore({ api });
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <ConnectedRouter history={history}>
+            <App />
+        </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
 );

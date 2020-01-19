@@ -1,0 +1,13 @@
+import { ActionTypes, ThunkAction } from '../actions';
+
+export function selectGame(gameIdOrJagexName: number | string | undefined) {
+    return {
+        type: 'ui.selectGame',
+        gameId: typeof gameIdOrJagexName === 'number' ? gameIdOrJagexName : undefined,
+        jagexName: typeof gameIdOrJagexName === 'string' ? gameIdOrJagexName : undefined
+    } as const;
+}
+
+export type UIAction = ActionTypes<[
+    typeof selectGame
+]>;

@@ -1,5 +1,5 @@
-import { useEffect, DependencyList } from 'react';
-import { ThunkDispatch } from './store/actions';
+import { useEffect, DependencyList, useCallback } from 'react';
+import { ThunkDispatch, RootAction, ThunkAction } from './store/actions';
 import { useDispatch } from 'react-redux';
 
 export type AsyncEffectCallback = () => Promise<void>;
@@ -14,9 +14,25 @@ export function useDispatchEffect(effect: (dispatch: ThunkDispatch) => void, dep
     const dispatch = useDispatch<ThunkDispatch>();
 
     useEffect(
-        () => {
-            effect(dispatch);
-        },
+        () => void effect(dispatch),
         deps === undefined ? deps : deps.concat([dispatch]) // eslint-disable-line
+    );
+}
+
+export function useDispatchCallback<T extends any[]>(callback: (dispatch: ThunkDispatch, ...args: T) => void, deps: DependencyList) {
+    const dispatch = useDispatch<ThunkDispatch>();
+
+    return useCallback(
+        (...args: T) => callback(dispatch, ...args),
+        deps.concat([dispatch]) // eslint-disable-line
+    );
+}
+
+export function useActionCreatorCallback<T extends any[]>(actionCreator: (...args: T) => RootAction | ThunkAction<any>, deps: DependencyList) {
+    const dispatch = useDispatch<ThunkDispatch>();
+
+    return useCallback(
+        (...args: T) => dispatch(actionCreator(...args) as any),
+        deps.concat([dispatch]) // eslint-disable-line
     );
 }

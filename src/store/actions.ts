@@ -1,8 +1,9 @@
 import { ThunkAction as ReduxThunkAction, ThunkDispatch as ReduxThunkDispatch } from 'redux-thunk';
 import { RootState } from '.';
 import { DefaultApi } from '../api';
-import { GamesAction } from './games/actions';
-import { GlobalAction } from './global/actions';
+import { DataAction } from './data/actions';
+import { UIAction } from './ui/actions';
+import { RouterAction } from 'connected-react-router';
 
 type __Indices<T> = Exclude<keyof T, keyof any[]>;
 type __ActionTypes_Helper<T extends any[]> = {
@@ -10,7 +11,7 @@ type __ActionTypes_Helper<T extends any[]> = {
 };
 export type ActionTypes<T extends any[]> = __ActionTypes_Helper<T>[keyof __ActionTypes_Helper<T>];
 
-export type RootAction = GlobalAction | GamesAction;
+export type RootAction = RouterAction | UIAction | DataAction;
 
 export type ExtraThunkArgument = {
     api: DefaultApi;
