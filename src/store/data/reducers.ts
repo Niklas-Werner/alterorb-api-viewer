@@ -1,5 +1,5 @@
 import { RootAction } from '../actions';
-import { Game, Achievement } from '../../api';
+import { Game, Achievement, HighscoresOrbPoints } from '../../api';
 
 type DataState = {
     games: {
@@ -8,11 +8,13 @@ type DataState = {
     achievements: {
         [gameId: number]: Achievement[] | null;
     };
+    highscores: HighscoresOrbPoints[] | null;
 };
 
 const initialState: DataState = {
     games: null,
-    achievements: {}
+    achievements: {},
+    highscores: null
 };
 
 export function dataReducer(state = initialState, action: RootAction): DataState {
@@ -29,6 +31,11 @@ export function dataReducer(state = initialState, action: RootAction): DataState
                     ...state.achievements,
                     [action.gameId]: action.achievements
                 }
+            };
+        case 'data.updateHighscores':
+            return {
+                ...state,
+                highscores: action.highscores
             };
         default:
             return state;

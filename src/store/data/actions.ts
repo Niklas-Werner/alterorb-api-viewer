@@ -1,10 +1,10 @@
-import { Achievement, Game } from '../../api';
+import { Achievement, Game, HighscoresOrbPoints, HighscoresModeEnum } from '../../api';
 import { ActionTypes, ThunkAction } from '../actions';
 
 export function fetchGames(): ThunkAction {
     return async (dispatch, getState, { api }) => {
         const state = getState();
-        if (state.data.games !== null)
+        if (state.data.games)
             return;
         const games = await api.listGames();
         dispatch(updateGames(games));
@@ -36,7 +36,25 @@ export function updateGameAchievements(gameId: number, achievements: Achievement
     } as const;
 }
 
+export function fetchHighscores(): ThunkAction {
+    return async (dispatch, getState, { api }) => {
+        const state = getState();
+        if (state.data.highscores)
+            return;
+        const highscores = await api.highscores(HighscoresModeEnum.Orbpoints);
+        dispatch(updateHighscores(highscores));
+    };
+}
+
+export function updateHighscores(highscores: HighscoresOrbPoints[]) {
+    return {
+        type: 'data.updateHighscores',
+        highscores
+    } as const;
+}
+
 export type DataAction = ActionTypes<[
     typeof updateGames,
-    typeof updateGameAchievements
+    typeof updateGameAchievements,
+    typeof updateHighscores
 ]>;

@@ -1,4 +1,4 @@
-import { ActionTypes, ThunkAction } from '../actions';
+import { ActionTypes } from '../actions';
 
 export function selectGame(gameIdOrJagexName: number | string | undefined) {
     return {

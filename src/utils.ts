@@ -19,6 +19,13 @@ export function useDispatchEffect(effect: (dispatch: ThunkDispatch) => void, dep
     );
 }
 
+export function useActionCreatorEffect(actionCreator: () => RootAction | ThunkAction<any>, deps?: DependencyList) {
+    useDispatchEffect(
+        dispatch => dispatch(actionCreator() as any),
+        deps
+    );
+}
+
 export function useDispatchCallback<T extends any[]>(callback: (dispatch: ThunkDispatch, ...args: T) => void, deps: DependencyList) {
     const dispatch = useDispatch<ThunkDispatch>();
 
