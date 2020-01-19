@@ -23,17 +23,20 @@ declare module 'react-redux' {
 export function configureStore(extraThunkArgument: ExtraThunkArgument, preloadedState: Partial<RootState> = {}) {
     const history = createBrowserHistory();
 
-    const logger = createLogger({});
+    const logger = createLogger();
+
+    const middleware = [
+        routerMiddleware(history),
+        thunk.withExtraArgument(extraThunkArgument),
+    ];
+    if (process.env.NODE_ENV !== 'production')
+        middleware.push(logger); // must be last middleware
 
     const store = createStore(
         createRootReducer(history),
         preloadedState,
         compose(
-            applyMiddleware(
-                routerMiddleware(history),
-                thunk.withExtraArgument(extraThunkArgument),
-                logger // must be last middleware
-            )
+            applyMiddleware(...middleware)
         )
     );
 

@@ -6,7 +6,7 @@ import { getSelectedGameAchievements, getSelectedGame } from '../store/ui/select
 import { useDispatchEffect } from '../utils';
 import { fetchGameAchievements } from '../store/data/actions';
 
-export default function SelectedGamePage() {
+export default function GamePage() {
     const selectedGame = useSelector(getSelectedGame);
     const selectedGameAchievements = useSelector(getSelectedGameAchievements);
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import './App.scss';
-import GamesList from './GamesList';
-import { SelectedGameRoute } from './routes';
-import SelectedGamePage from './SelectedGamePage';
+import GamePage from './GamePage';
 import HighscoresList from './HighscoresList';
+import PlayerPage from './PlayerPage';
+import { SelectedGameRoute, SelectedPlayerRoute } from './routes';
 
 export default function App() {
     return <>
@@ -16,26 +16,26 @@ export default function App() {
                 <li>
                     <Link to='/games'>Games</Link>
                 </li>
+                <li>
+                    <Link to='/players'>Players</Link>
+                </li>
             </ul>
         </nav>
 
-        <SelectedGameRoute path='/games/:game' />
+        <SelectedGameRoute path='/games/:name' />
+        <SelectedPlayerRoute path='/players/:name' />
 
         <Switch>
             <Route path='/highscores'>
                 <HighscoresList />
             </Route>
 
-            <Route path='/games/:game'>
-                <SelectedGamePage />
-            </Route>
-
             <Route path='/games'>
-                <GamesList />
+                <GamePage />
             </Route>
 
-            <Route>
-                {/* <TestPage /> */}
+            <Route path='/players'>
+                <PlayerPage />
             </Route>
         </Switch>
     </>;

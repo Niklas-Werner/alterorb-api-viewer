@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { fetchHighscores } from '../store/data/actions';
 import { useActionCreatorEffect } from '../utils';
+import { Link } from 'react-router-dom';
 
 export default function HighscoresList() {
     const highscores = useSelector(state => state.data.highscores);
@@ -14,7 +15,7 @@ export default function HighscoresList() {
     return <ol>
         {highscores.map((entry, index) =>
             <li key={index}>
-                {entry.displayName}: {entry.orbPoints}P
+                <Link to={`/players/${entry.displayName}`}>{entry.displayName}</Link>: {entry.orbPoints}P
             </li>
         )}
     </ol>;

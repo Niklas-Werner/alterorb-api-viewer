@@ -5,9 +5,9 @@ export const getGames = (state: RootState) => state.data.games;
 
 export const getAchievements = (state: RootState) => state.data.achievements;
 
-export const getSelectedGameId = (state: RootState) => state.ui.selectedGameId;
+const getSelectedGameId = (state: RootState) => state.ui.selectedGameId;
 
-export const getSelectedGameJagexName = (state: RootState) => state.ui.selectedGameJagexName;
+const getSelectedGameJagexName = (state: RootState) => state.ui.selectedGameJagexName;
 
 export const getSelectedGame = createSelector(
     [getGames, getSelectedGameId, getSelectedGameJagexName],
@@ -28,5 +28,20 @@ export const getSelectedGameAchievements = createSelector(
         if (achievements === null || selectedGame === null)
             return null;
         return achievements[selectedGame.id!] ?? null;
+    }
+);
+
+export const getPlayers = (state: RootState) => state.data.players;
+
+export const getPlayerNames = (state: RootState) => state.data.playerNames;
+
+const getSelectedPlayerUuid = (state: RootState) => state.ui.selectedPlayerUuid;
+
+export const getSelectedPlayer = createSelector(
+    [getPlayers, getPlayerNames, getSelectedPlayerUuid],
+    (players, playerNames, selectedPlayerUuid) => {
+        if (selectedPlayerUuid === undefined)
+            return null;
+        return players[selectedPlayerUuid] ?? null;
     }
 );
