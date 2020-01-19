@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import GamePage from './GamePage';
-import HighscoresList from './HighscoresList';
+import HighscoresPage from './HighscoresPage';
+import IndexPage from './IndexPage';
 import PlayerPage from './PlayerPage';
 import { SelectedGameRoute, SelectedPlayerRoute } from './routes';
 
@@ -10,6 +11,9 @@ export default function App() {
     return <>
         <nav>
             <ul>
+                <li>
+                    <Link to='/'>Index</Link>
+                </li>
                 <li>
                     <Link to='/highscores'>Highscores</Link>
                 </li>
@@ -27,7 +31,7 @@ export default function App() {
 
         <Switch>
             <Route path='/highscores'>
-                <HighscoresList />
+                <HighscoresPage />
             </Route>
 
             <Route path='/games'>
@@ -36,6 +40,10 @@ export default function App() {
 
             <Route path='/players'>
                 <PlayerPage />
+            </Route>
+
+            <Route>
+                <IndexPage />
             </Route>
         </Switch>
     </>;

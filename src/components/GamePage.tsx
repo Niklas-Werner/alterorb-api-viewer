@@ -5,6 +5,7 @@ import GamesList from './GamesList';
 import { getSelectedGameAchievements, getSelectedGame } from '../store/ui/selectors';
 import { useDispatchEffect } from '../utils';
 import { fetchGameAchievements } from '../store/data/actions';
+import { Layout } from './Layout';
 
 export default function GamePage() {
     const selectedGame = useSelector(getSelectedGame);
@@ -15,16 +16,18 @@ export default function GamePage() {
             dispatch(fetchGameAchievements(selectedGame.id!));
     }, [selectedGame]);
 
-    return <>
-        <main>
-            <section>
-                <GamesList />
-            </section>
-            {selectedGameAchievements &&
+    return (
+        <Layout title='Games'>
+            <div style={{ display: 'flex' }}>
                 <section>
-                    <GameAchievementsList achievements={selectedGameAchievements} />
+                    <GamesList />
                 </section>
-            }
-        </main>
-    </>;
+                {selectedGameAchievements &&
+                    <section>
+                        <GameAchievementsList achievements={selectedGameAchievements} />
+                    </section>
+                }
+            </div>
+        </Layout>
+    );
 }

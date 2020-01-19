@@ -12,11 +12,13 @@ export default function HighscoresList() {
     if (!highscores)
         return null;
 
-    return <ol>
-        {highscores.map((entry, index) =>
-            <li key={index}>
-                <Link to={`/players/${entry.displayName}`}>{entry.displayName}</Link>: {entry.orbPoints}P
+    return <>
+        <ol>
+            {highscores.map((entry, index) =>
+                <li key={index}>
+                    <Link to={`/players/${entry.displayName}`}>{entry.displayName}</Link>: {entry.orbPoints}P
             </li>
-        )}
-    </ol>;
+            )}
+        </ol>
+    </>;
 }

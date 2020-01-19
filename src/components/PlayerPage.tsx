@@ -3,22 +3,25 @@ import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { getSelectedPlayer } from '../store/ui/selectors';
 import { useDispatchCallback } from '../utils';
+import { Layout } from './Layout';
 
 export default function PlayerPage() {
     const selectedPlayer = useSelector(getSelectedPlayer);
 
-    return <>
-        <PlayerSelector />
-        {selectedPlayer &&
-            <p>
-                {selectedPlayer.displayName}
-                <br />
-                {selectedPlayer.orbCoins}C
-                <br />
-                {selectedPlayer.orbPoints}P
-            </p>
-        }
-    </>;
+    return (
+        <Layout title='Players'>
+            <PlayerSelector />
+            {selectedPlayer &&
+                <p>
+                    {selectedPlayer.displayName}
+                    <br />
+                    {selectedPlayer.orbCoins}C
+                    <br />
+                    {selectedPlayer.orbPoints}P
+                </p>
+            }
+        </Layout>
+    );
 }
 
 function PlayerSelector() {
