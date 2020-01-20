@@ -3,14 +3,19 @@ import { useSelector } from 'react-redux';
 import { fetchHighscores } from '../store/data/actions';
 import { useActionCreatorEffect } from '../utils';
 import { Link } from 'react-router-dom';
+import { getHighscores, getFetchingHighscores } from '../store/data/selectors';
 
 export default function HighscoresList() {
-    const highscores = useSelector(state => state.data.highscores);
+    const fetchingHighscores = useSelector(getFetchingHighscores);
+    const highscores = useSelector(getHighscores);
 
     useActionCreatorEffect(fetchHighscores);
 
+    if (fetchingHighscores)
+        return <p>Fetching highscores list...</p>;
+
     if (!highscores)
-        return null;
+        return <p>No highscores found.</p>;
 
     return <>
         <ol>

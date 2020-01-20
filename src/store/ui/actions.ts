@@ -1,5 +1,4 @@
-import { ActionTypes, ThunkAction } from '../actions';
-import { fetchPlayer } from '../data/actions';
+import { ActionTypes } from '../actions';
 
 export function selectGame(gameIdOrJagexName: number | string | undefined) {
     return {
@@ -9,23 +8,14 @@ export function selectGame(gameIdOrJagexName: number | string | undefined) {
     } as const;
 }
 
-export function selectPlayer(uuidOrName: string, type: 'uuid' | 'name'): ThunkAction {
-    return async (dispatch, getState) => {
-        const { ui: { selectedPlayerUuid } } = getState();
-        const player = await dispatch(fetchPlayer(uuidOrName, type));
-        if (selectedPlayerUuid !== player.uuid)
-            dispatch(setSelectedPlayer(player.uuid!));
-    };
-}
-
-export function setSelectedPlayer(uuid: string | undefined) {
+export function selectPlayer(name: string | undefined) {
     return {
-        type: 'ui.setSelectedPlayer',
-        uuid
+        type: 'ui.selectPlayer',
+        name
     } as const;
 }
 
 export type UIAction = ActionTypes<[
     typeof selectGame,
-    typeof setSelectedPlayer
+    typeof selectPlayer
 ]>;

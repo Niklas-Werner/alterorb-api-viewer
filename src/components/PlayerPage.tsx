@@ -1,25 +1,55 @@
 import { push } from 'connected-react-router';
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { getSelectedPlayer } from '../store/ui/selectors';
-import { useDispatchCallback } from '../utils';
+import { fetchGames, fetchPlayer, fetchPlayerAchievements } from '../store/data/actions';
+import { getSelectedPlayerData, getSelectedPlayerAchievementsByGame, getSelectedPlayerName, getSelectedPlayerAchievementsData } from '../store/ui/selectors';
+import { useDispatchCallback, useDispatchEffect } from '../utils';
 import { Layout } from './Layout';
 
 export default function PlayerPage() {
-    const selectedPlayer = useSelector(getSelectedPlayer);
+    const selectedPlayerName = useSelector(getSelectedPlayerName);
+    const { data: player, fetching: fetchingPlayer } = useSelector(getSelectedPlayerData) ?? {};
+    const { fetching: fetchingAchievements } = useSelector(getSelectedPlayerAchievementsData) ?? {};
+    const achievementsByGame = useSelector(getSelectedPlayerAchievementsByGame);
+
+    useDispatchEffect(dispatch => {
+        if (selectedPlayerName)
+            dispatch(fetchPlayer(selectedPlayerName));
+        if (player)
+            dispatch(fetchPlayerAchievements(player.uuid!));
+        dispatch(fetchGames());
+    });
 
     return (
         <Layout title='Players'>
             <PlayerSelector />
-            {selectedPlayer &&
-                <p>
-                    {selectedPlayer.displayName}
-                    <br />
-                    {selectedPlayer.orbCoins}C
-                    <br />
-                    {selectedPlayer.orbPoints}P
-                </p>
+            {!selectedPlayerName &&
+                <p>No player selected.</p>
             }
+            {fetchingPlayer &&
+                <p>Fetching player info...</p>
+            }
+            {player && <>
+                {player.displayName}
+                <br />
+                {player.orbCoins}C
+                    <br />
+                {player.orbPoints}P
+                    <br />
+                {fetchingAchievements &&
+                    <p>Fetching player achievements...</p>
+                }
+                {achievementsByGame && <>
+                    Achievements:
+                        <ul>
+                        {achievementsByGame.map(({ gameId, name, achievements, totalAchievements }) => (
+                            <li key={gameId}>
+                                {name}: {achievements}{totalAchievements ? ` / ${totalAchievements}` : ''}
+                            </li>
+                        ))}
+                    </ul>
+                </>}
+            </>}
         </Layout>
     );
 }

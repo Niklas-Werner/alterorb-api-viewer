@@ -1,5 +1,5 @@
 import { routeDispatcherComponent } from '../route-param-dispatcher';
-import { selectGame, selectPlayer, setSelectedPlayer } from '../store/ui/actions';
+import { selectGame, selectPlayer } from '../store/ui/actions';
 
 export const SelectedGameRoute = routeDispatcherComponent((dispatch, active, routeParam) => {
     if (active && routeParam)
@@ -10,7 +10,7 @@ export const SelectedGameRoute = routeDispatcherComponent((dispatch, active, rou
 
 export const SelectedPlayerRoute = routeDispatcherComponent((dispatch, active, routeParam) => {
     if (active && routeParam)
-        dispatch(selectPlayer(routeParam, 'name'));
+        dispatch(selectPlayer(routeParam));
     else
-        dispatch(setSelectedPlayer(undefined));
+        dispatch(selectPlayer(undefined));
 });

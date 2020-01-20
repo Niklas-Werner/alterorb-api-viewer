@@ -2,12 +2,14 @@ import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { DefaultApi } from './api';
+import { DefaultApi, Configuration } from './api';
 import App from './components/App';
 import './index.scss';
 import { configureStore } from './store';
 
-const api = new DefaultApi();
+const api = new DefaultApi(new Configuration({
+    // middleware: [{ post: ({ response }) => new Promise(resolve => setTimeout(() => resolve(response), 500)) }]
+}));
 
 const { store, history } = configureStore({ api });
 

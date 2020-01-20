@@ -1,30 +1,31 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Game } from '../api';
-import { fetchGames } from '../store/data/actions';
-import { useDispatchEffect } from '../utils';
 import { NavLink } from 'react-router-dom';
+import { fetchGames } from '../store/data/actions';
+import { getFetchingGames } from '../store/data/selectors';
+import { getGameDetails } from '../store/ui/selectors';
+import { useActionCreatorEffect } from '../utils';
 
 export default function GamesList() {
-    const games = useSelector(state => state.data.games);
+    const fetchingGames = useSelector(getFetchingGames);
+    const gameDetails = useSelector(getGameDetails);
 
-    useDispatchEffect(dispatch => dispatch(fetchGames()));
+    useActionCreatorEffect(fetchGames);
+
+    if (fetchingGames)
+        return <p>Fetching games list...</p>;
+
+    if (!gameDetails)
+        return <p>No games found.</p>;
 
     return <ul>
-        {games && Object.entries(games).map(([gameId, game]) =>
-            <GamesListEntry key={gameId} game={game} />
+        {gameDetails.map(({ key, name, achievements }) =>
+            <li key={key}>
+                <NavLink to={`/games/${key}`}>{name}</NavLink>
+                {achievements && <>
+                    ({achievements.count} achievements, {achievements.orbPoints}P, {achievements.orbCoins}C)
+                </>}
+            </li>
         )}
     </ul>;
-}
-
-function GamesListEntry(props: {
-    game: Game;
-}) {
-    const { game } = props;
-
-    return (
-        <li>
-            <NavLink to={`/games/${game.jagexName}`}>{game.fancyName}</NavLink>
-        </li>
-    );
 }

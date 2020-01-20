@@ -3,13 +3,13 @@ import { RootAction } from '../actions';
 type UIState = {
     selectedGameId: number | undefined;
     selectedGameJagexName: string | undefined;
-    selectedPlayerUuid: string | undefined;
+    selectedPlayerName: string | undefined;
 };
 
 const initialState: UIState = {
     selectedGameId: undefined,
     selectedGameJagexName: undefined,
-    selectedPlayerUuid: undefined
+    selectedPlayerName: undefined
 };
 
 export function uiReducer(state = initialState, action: RootAction): UIState {
@@ -20,10 +20,10 @@ export function uiReducer(state = initialState, action: RootAction): UIState {
                 selectedGameId: action.gameId,
                 selectedGameJagexName: action.jagexName
             };
-        case 'ui.setSelectedPlayer':
+        case 'ui.selectPlayer':
             return {
                 ...state,
-                selectedPlayerUuid: action.uuid
+                selectedPlayerName: action.name
             };
         default:
             return state;
