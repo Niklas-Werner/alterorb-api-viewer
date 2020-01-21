@@ -3,7 +3,7 @@ import { Layout } from './Layout';
 
 export default function IndexPage() {
     return (
-        <Layout title='Index'>
+        <Layout>
             <p>
                 AlterOrb API Viewer
             </p>

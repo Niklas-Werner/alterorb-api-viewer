@@ -1,0 +1,61 @@
+@import '../theme';
+
+footer {
+    display: flex;
+    flex-direction: column;
+
+    hr {
+        margin: 0.5em 0 0 0;
+        border: none;
+        border-top: 1px solid $highlight-color;
+    }
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5em 1em;
+
+    // behave like 'space-evenly' but with more browser compatibility (https://stackoverflow.com/a/47535338)
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+    }
+
+    a {
+        color: initial;
+        padding: 0.3em;
+    }
+
+    a:hover {
+        color: $highlight-color;
+    }
+
+    nav {
+        ul {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin: 0.3em;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .footer-content {
+        flex-direction: column;
+
+        nav {
+            ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    }
+}

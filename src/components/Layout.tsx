@@ -1,14 +1,27 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
+import Footer from './Footer';
+import Header from './Header';
 import './Layout.scss';
 
 export function Layout(props: PropsWithChildren<{
-    title: string;
+    title?: string;
 }>) {
     const { title, children } = props;
 
-    return <>
-        <h2>{title}</h2>
+    useEffect(() => {
+        document.title = (title ? `${title} - ` : '') + 'AlterOrb API Viewer';
+    }, [title]);
 
-        {children}
+    return <>
+        <Header />
+
+        <main>
+            {title &&
+                <h2>{title}</h2>
+            }
+            {children}
+        </main>
+
+        <Footer />
     </>;
 }
