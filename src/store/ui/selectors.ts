@@ -2,27 +2,6 @@ import { createSelector } from 'reselect';
 import { RootState } from '..';
 import { getGames, getPlayerAchievements, getAchievementsData, getPlayersData } from '../data/selectors';
 
-export const getGameDetails = createSelector(
-    [getGames, getAchievementsData],
-    (games, achievementsData) => {
-        if (games === null)
-            return null;
-        return Object.values(games).map(game => {
-            const achievements = achievementsData?.[game.id!]?.data;
-            const achievementsInfo = achievements ? {
-                count: achievements.length,
-                orbPoints: achievements.reduce((acc, achievement) => acc + achievement.orbPoints!, 0),
-                orbCoins: achievements.reduce((acc, achievement) => acc + achievement.orbCoins!, 0),
-            } : undefined;
-            return {
-                key: game.jagexName,
-                name: game.fancyName,
-                achievements: achievementsInfo
-            };
-        });
-    }
-);
-
 const getSelectedGameId = (state: RootState) => state.ui.selectedGameId;
 
 const getSelectedGameJagexName = (state: RootState) => state.ui.selectedGameJagexName;
@@ -70,8 +49,8 @@ export const getSelectedPlayerAchievementsData = createSelector(
 );
 
 export const getSelectedPlayerAchievementsByGame = createSelector(
-    [getSelectedPlayerAchievementsData, getGames, getAchievementsData],
-    (playerAchievementsData, games, achievementsData) => {
+    [getSelectedPlayerAchievementsData, getGames],
+    (playerAchievementsData, games) => {
         if (!playerAchievementsData?.data || !games)
             return null;
         const counts: Record<number, number> = {};
@@ -81,7 +60,7 @@ export const getSelectedPlayerAchievementsByGame = createSelector(
             gameId: game.id!,
             name: game.fancyName!,
             achievements: counts[game.id!] ?? 0,
-            totalAchievements: achievementsData?.[game.id!]?.data?.length
+            totalAchievements: game.obtainableAchievements!
         }));
     }
 );

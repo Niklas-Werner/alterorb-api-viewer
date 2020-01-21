@@ -44,7 +44,7 @@ export default function PlayerPage() {
                         <ul>
                         {achievementsByGame.map(({ gameId, name, achievements, totalAchievements }) => (
                             <li key={gameId}>
-                                {name}: {achievements}{totalAchievements ? ` / ${totalAchievements}` : ''}
+                                {name}: {achievements}{totalAchievements !== undefined ? ` / ${totalAchievements}` : ''}
                             </li>
                         ))}
                     </ul>

@@ -2,29 +2,26 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { fetchGames } from '../store/data/actions';
-import { getFetchingGames } from '../store/data/selectors';
-import { getGameDetails } from '../store/ui/selectors';
+import { getFetchingGames, getGames } from '../store/data/selectors';
 import { useActionCreatorEffect } from '../utils';
 
 export default function GamesList() {
     const fetchingGames = useSelector(getFetchingGames);
-    const gameDetails = useSelector(getGameDetails);
+    const games = useSelector(getGames);
 
     useActionCreatorEffect(fetchGames);
 
     if (fetchingGames)
         return <p>Fetching games list...</p>;
 
-    if (!gameDetails)
+    if (!games)
         return <p>No games found.</p>;
 
     return <ul>
-        {gameDetails.map(({ key, name, achievements }) =>
-            <li key={key}>
-                <NavLink to={`/games/${key}`}>{name}</NavLink>
-                {achievements && <>
-                    ({achievements.count} achievements, {achievements.orbPoints}P, {achievements.orbCoins}C)
-                </>}
+        {Object.values(games).map(game =>
+            <li key={game.jagexName}>
+                <NavLink to={`/games/${game.jagexName}`}>{game.fancyName}</NavLink>
+                {` (${game.obtainableAchievements} achievements, ${game.obtainableOrbPoints}P, ${game.obtainableOrbCoins}C)`}
             </li>
         )}
     </ul>;
