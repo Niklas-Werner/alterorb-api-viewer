@@ -1,0 +1,54 @@
+@import '../theme';
+
+main {
+    align-items: center;
+}
+
+ul.box-link-list {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    // behave like 'space-evenly' but with more browser compatibility (https://stackoverflow.com/a/47535338)
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+    }
+
+    li {
+        margin: 0.5em;
+        min-width: 35vw;
+        min-height: 15vh;
+        list-style-type: none;
+        display: flex;
+
+        a {
+            flex: 1;
+            border: 1px solid $highlight-color;
+            padding: 0.5em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: initial;
+
+            h3 {
+                margin: 0 0 0.5em 0;
+            }
+
+            p {
+                margin: 0;
+                text-align: center;
+            }
+        }
+
+        a:hover {
+            background-color: $highlight-background-color;
+        }
+    }
+}
