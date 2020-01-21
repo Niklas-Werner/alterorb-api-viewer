@@ -9,10 +9,10 @@ export function Footer() {
                 <nav>
                     <ul>
                         <li>
-                            <a href='https://community.alterorb.net/'>AlterOrb Community</a>
+                            <a href='https://alterorb.net/'>AlterOrb</a>
                         </li>
                         <li>
-                            <a href='https://github.com/alterorb/launcher'>AlterOrb</a>
+                            <a href='https://community.alterorb.net/'>AlterOrb Community</a>
                         </li>
                         <li>
                             <a href='https://github.com/Niklas-Werner/alterorb-api-viewer'>View on Github</a>
