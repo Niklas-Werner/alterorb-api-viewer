@@ -1,5 +1,5 @@
-import { routeDispatcherComponent } from '../route-param-dispatcher';
-import { selectGame, selectPlayer } from '../store/ui/actions';
+import { routeDispatcherComponent } from './route-param-dispatcher';
+import { selectGame, selectPlayer } from './store/ui/actions';
 
 export const SelectedGameRoute = routeDispatcherComponent((dispatch, active, routeParam) => {
     if (active && routeParam)

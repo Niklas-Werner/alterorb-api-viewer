@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect } from 'react';
-import Footer from './Footer';
-import Header from './Header';
+import { Footer } from './Footer';
+import { Header } from './Header';
 import './Layout.scss';
 
 export function Layout(props: PropsWithChildren<{

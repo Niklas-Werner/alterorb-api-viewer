@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import GameAchievementsList from './AchievementsList';
-import GamesList from './GamesList';
-import { getSelectedGameAchievementsData, getSelectedGame } from '../store/ui/selectors';
-import { useDispatchEffect } from '../utils';
+import { AchievementsList } from '../components/AchievementsList';
+import { GamesList } from '../components/GamesList';
+import { Layout } from '../components/layout/Layout';
 import { fetchGameAchievements } from '../store/data/actions';
-import { Layout } from './Layout';
+import { getSelectedGame, getSelectedGameAchievementsData } from '../store/ui/selectors';
+import { useDispatchEffect } from '../utils';
 
-export default function GamePage() {
+export function GamePage() {
     const selectedGame = useSelector(getSelectedGame);
     const selectedGameAchievements = useSelector(getSelectedGameAchievementsData);
 
@@ -28,7 +28,7 @@ export default function GamePage() {
                     ) : (
                         selectedGameAchievements?.data && (
                             <section>
-                                <GameAchievementsList achievements={selectedGameAchievements.data} />
+                                <AchievementsList achievements={selectedGameAchievements.data} />
                             </section>
                         )
                     )

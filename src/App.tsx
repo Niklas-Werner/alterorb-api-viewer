@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import GamePage from './GamePage';
-import HighscoresPage from './HighscoresPage';
-import IndexPage from './IndexPage';
-import PlayerPage from './PlayerPage';
+import { GamePage } from './pages/GamesPage';
+import { HighscoresPage } from './pages/HighscoresPage';
+import { IndexPage } from './pages/IndexPage';
+import { PlayersPage } from './pages/PlayersPage';
 import { SelectedGameRoute, SelectedPlayerRoute } from './routes';
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
             </Route>
 
             <Route path='/players'>
-                <PlayerPage />
+                <PlayersPage />
             </Route>
 
             <Route>

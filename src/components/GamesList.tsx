@@ -5,7 +5,7 @@ import { fetchGames } from '../store/data/actions';
 import { getFetchingGames, getGames } from '../store/data/selectors';
 import { useActionCreatorEffect } from '../utils';
 
-export default function GamesList() {
+export function GamesList() {
     const fetchingGames = useSelector(getFetchingGames);
     const games = useSelector(getGames);
 

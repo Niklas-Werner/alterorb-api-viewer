@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './IndexPage.scss';
-import { Layout } from './Layout';
+import { Layout } from '../components/layout/Layout';
 
-export default function IndexPage() {
+export function IndexPage() {
     return (
         <Layout>
             <ul className='box-link-list'>

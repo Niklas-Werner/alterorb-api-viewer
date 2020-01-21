@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { fetchGames, fetchPlayer, fetchPlayerAchievements } from '../store/data/actions';
 import { getSelectedPlayerData, getSelectedPlayerAchievementsByGame, getSelectedPlayerName, getSelectedPlayerAchievementsData } from '../store/ui/selectors';
 import { useDispatchCallback, useDispatchEffect } from '../utils';
-import { Layout } from './Layout';
+import { Layout } from '../components/layout/Layout';
 
-export default function PlayerPage() {
+export function PlayersPage() {
     const selectedPlayerName = useSelector(getSelectedPlayerName);
     const { data: player, fetching: fetchingPlayer } = useSelector(getSelectedPlayerData) ?? {};
     const { fetching: fetchingAchievements } = useSelector(getSelectedPlayerAchievementsData) ?? {};

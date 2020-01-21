@@ -5,7 +5,7 @@ import { useActionCreatorEffect } from '../utils';
 import { Link } from 'react-router-dom';
 import { getHighscores, getFetchingHighscores } from '../store/data/selectors';
 
-export default function HighscoresList() {
+export function HighscoresList() {
     const fetchingHighscores = useSelector(getFetchingHighscores);
     const highscores = useSelector(getHighscores);
 

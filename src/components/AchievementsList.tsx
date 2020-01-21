@@ -1,7 +1,7 @@
 import React from 'react';
 import { Achievement } from '../api';
 
-export default function AchievementsList(props: {
+export function AchievementsList(props: {
     achievements: Achievement[];
 }) {
     const { achievements } = props;

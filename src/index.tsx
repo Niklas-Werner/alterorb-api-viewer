@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { DefaultApi, Configuration } from './api';
-import App from './components/App';
+import App from './App';
 import './index.scss';
 import { configureStore } from './store';
 
