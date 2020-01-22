@@ -12,7 +12,7 @@
         margin: 0 0 0.5em 0;
     }
 
-    .table {
+    & > .table {
         display: grid;
         grid-template-columns: auto auto auto;
 
@@ -20,12 +20,12 @@
             margin: 0.2em 0.5em;
         }
 
-        .rank {
+        & > .rank {
             grid-column: 1;
             text-align: right;
         }
 
-        .name {
+        & > .name {
             grid-column: 2;
 
             a {
@@ -37,12 +37,12 @@
             }
         }
 
-        .score {
+        & > .score {
             grid-column: 3;
             text-align: right;
         }
 
-        .head {
+        & > .head {
             font-weight: bold;
             text-align: left;
         }

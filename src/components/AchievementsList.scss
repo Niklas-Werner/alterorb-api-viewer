@@ -1,0 +1,51 @@
+@import '../theme';
+
+.achievements-table {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+
+    & > span {
+        margin: 0.2em 0.5em;
+    }
+
+    & > .name {
+        grid-column: 1;
+    }
+
+    & > .points {
+        grid-column: 2;
+        text-align: right;
+    }
+
+    & > .criteria {
+        grid-column: 3;
+    }
+
+    & > .head {
+        font-weight: bold;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .achievements-table {
+        display: grid;
+        grid-template-columns: 1fr auto auto 1fr;
+        justify-content: center;
+
+        & > .name {
+            grid-column: 2;
+        }
+
+        & > .points {
+            grid-column: 3;
+        }
+
+        & > .criteria {
+            grid-column: 1 / span 4;
+            text-align: center;
+            color: $lowlight-color;
+            margin-top: 0;
+        }
+    }
+}

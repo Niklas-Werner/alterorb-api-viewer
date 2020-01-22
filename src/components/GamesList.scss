@@ -1,0 +1,48 @@
+@import '../theme';
+
+.games-table {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto auto 1fr;
+
+    & > span {
+        margin: 0.2em 0.5em;
+    }
+
+    & > .head.name {
+        grid-column: 2;
+    }
+
+    & > .name {
+        grid-column: 2 / span 2;
+
+        a {
+            color: initial;
+        }
+
+        a:hover {
+            color: $highlight-color;
+        }
+    }
+
+    & > .head.achievements {
+        grid-column: 3 / span 2;
+    }
+
+    & > .achievements {
+        grid-column: 4;
+        text-align: right;
+    }
+
+    & > .points {
+        grid-column: 5;
+        text-align: right;
+    }
+
+    & > .head {
+        font-weight: bold;
+    }
+
+    & > .content {
+        grid-column: 1 / span 6;
+    }
+}

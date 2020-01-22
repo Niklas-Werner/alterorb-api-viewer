@@ -18,22 +18,14 @@ export function GamePage() {
 
     return (
         <Layout title='Games'>
-            <div style={{ display: 'flex' }}>
-                <section>
-                    <GamesList />
-                </section>
-                {selectedGameAchievements?.fetching ?
-                    (
-                        <p>Fetching achievements...</p>
-                    ) : (
-                        selectedGameAchievements?.data && (
-                            <section>
-                                <AchievementsList achievements={selectedGameAchievements.data} />
-                            </section>
-                        )
-                    )
+            <GamesList selectedGameKey={selectedGame?.jagexName}>
+                {selectedGameAchievements?.fetching &&
+                    <p>Fetching achievements...</p>
                 }
-            </div>
+                {selectedGameAchievements?.data &&
+                    <AchievementsList achievements={selectedGameAchievements.data} />
+                }
+            </GamesList>
         </Layout>
     );
 }

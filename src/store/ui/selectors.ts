@@ -1,6 +1,16 @@
 import { createSelector } from 'reselect';
 import { RootState } from '..';
 import { getGames, getPlayerAchievements, getAchievementsData, getPlayersData } from '../data/selectors';
+import { compareStrings } from '../../shared';
+
+export const getSortedGames = createSelector(
+    [getGames],
+    (games) => {
+        if (!games)
+            return null;
+        return Object.values(games).sort((a, b) => compareStrings(a.fancyName!, b.fancyName!));
+    }
+);
 
 const getSelectedGameId = (state: RootState) => state.ui.selectedGameId;
 
