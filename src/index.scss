@@ -1,4 +1,19 @@
+@import './theme';
+
 body {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
+}
+
+.simple-progress-bar {
+    position: relative;
+    background-color: $lowlight-background-color;
+
+    .bar-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background-color: $highlight-background-color;
+    }
 }

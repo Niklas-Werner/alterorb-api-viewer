@@ -17,8 +17,8 @@ export function GamePage() {
     }, [selectedGame]);
 
     return (
-        <Layout title='Games'>
-            <GamesList selectedGameKey={selectedGame?.jagexName}>
+        <Layout title={selectedGame ? `Game: ${selectedGame.fancyName}` : 'Games'}>
+            <GamesList contentGameKey={selectedGame?.jagexName}>
                 {selectedGameAchievements?.fetching &&
                     <p>Fetching achievements...</p>
                 }

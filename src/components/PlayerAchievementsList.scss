@@ -1,0 +1,24 @@
+@import '../theme';
+
+.player-achievements-table {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+
+    & > span {
+        margin: 0.2em 0.5em;
+    }
+
+    & > .name {
+        grid-column: 1;
+    }
+
+    & > .unlocked {
+        grid-column: 2;
+        text-align: center;
+    }
+
+    & > .head {
+        font-weight: bold;
+    }
+}

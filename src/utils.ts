@@ -35,11 +35,11 @@ export function useDispatchCallback<T extends any[]>(callback: (dispatch: ThunkD
     );
 }
 
-export function useActionCreatorCallback<T extends any[]>(actionCreator: (...args: T) => RootAction | ThunkAction<any>, deps: DependencyList) {
+export function useActionCreatorCallback<T extends any[]>(actionCreator: (...args: T) => RootAction | ThunkAction<any>) {
     const dispatch = useDispatch<ThunkDispatch>();
 
     return useCallback(
         (...args: T) => dispatch(actionCreator(...args) as any),
-        deps.concat([dispatch]) // eslint-disable-line
+        [dispatch] // eslint-disable-line
     );
 }

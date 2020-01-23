@@ -1,14 +1,14 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect, ConnectedProps, shallowEqual } from 'react-redux';
 import { Route, RouteComponentProps } from 'react-router';
 import { RootState } from './store';
 import { ThunkDispatch } from './store/actions';
 
 interface Options {
-    onChange?: (dispatch: ThunkDispatch, active: boolean, routeParam?: string) => void;
-    onEnter?: (dispatch: ThunkDispatch, routeParam?: string) => void;
-    onUpdate?: (dispatch: ThunkDispatch, routeParam?: string) => void;
-    onLeave?: (dispatch: ThunkDispatch, routeParam?: string) => void;
+    onChange?: (dispatch: ThunkDispatch, active: boolean, ...routeParams: (string | undefined)[]) => void;
+    onEnter?: (dispatch: ThunkDispatch, ...routeParams: (string | undefined)[]) => void;
+    onUpdate?: (dispatch: ThunkDispatch, ...routeParams: (string | undefined)[]) => void;
+    onLeave?: (dispatch: ThunkDispatch, ...routeParams: (string | undefined)[]) => void;
 }
 
 interface Props {
@@ -24,46 +24,46 @@ export function routeDispatcherComponent(optionsOrOnChange: Options | Options['o
 
     const connector = connect(
         (state: RootState, ownProps: RouteComponentProps<any>) => ({
-            routeParam: Object.values(ownProps.match.params)[0] as string | undefined
+            routeParams: Object.values(ownProps.match.params) as (string | undefined)[]
         }),
         dispatch => ({ dispatch })
     );
 
     const RouteDispatcher = class extends React.Component<ConnectedProps<typeof connector>, {
-        routeParam?: string;
+        routeParams: (string | undefined)[];
     }> {
         constructor(props: ConnectedProps<typeof connector>) {
             super(props);
 
             this.state = {
-                routeParam: props.routeParam
+                routeParams: props.routeParams
             };
         }
 
         componentDidMount() {
             if (onEnter)
-                onEnter(this.props.dispatch, this.props.routeParam);
+                onEnter(this.props.dispatch, ...this.props.routeParams);
             if (onChange)
-                onChange(this.props.dispatch, true, this.props.routeParam);
+                onChange(this.props.dispatch, true, ...this.props.routeParams);
         }
 
         componentDidUpdate() {
-            if (this.props.routeParam !== this.state.routeParam) {
+            if (!shallowEqual(this.props.routeParams, this.state.routeParams)) {
                 if (onUpdate)
-                    onUpdate(this.props.dispatch, this.props.routeParam);
+                    onUpdate(this.props.dispatch, ...this.props.routeParams);
                 if (onChange)
-                    onChange(this.props.dispatch, true, this.props.routeParam);
+                    onChange(this.props.dispatch, true, ...this.props.routeParams);
                 this.setState({
-                    routeParam: this.props.routeParam
+                    routeParams: this.props.routeParams
                 });
             }
         }
 
         componentWillUnmount() {
             if (onLeave)
-                onLeave(this.props.dispatch, this.props.routeParam);
+                onLeave(this.props.dispatch, ...this.props.routeParams);
             if (onChange)
-                onChange(this.props.dispatch, false, this.props.routeParam);
+                onChange(this.props.dispatch, false, ...this.props.routeParams);
         }
 
         render() {

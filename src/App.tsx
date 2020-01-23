@@ -4,12 +4,15 @@ import { GamePage } from './pages/GamesPage';
 import { HighscoresPage } from './pages/HighscoresPage';
 import { IndexPage } from './pages/IndexPage';
 import { PlayersPage } from './pages/PlayersPage';
-import { SelectedGameRoute, SelectedPlayerRoute } from './routes';
+import { SelectedGameRoute, SelectedPlayerAndGameRoute, SelectedPlayerRoute } from './routes';
 
 export default function App() {
     return <>
-        <SelectedGameRoute path='/games/:name' />
-        <SelectedPlayerRoute path='/players/:name' />
+        <Switch>
+            <SelectedGameRoute path='/games/:game?' />
+            <SelectedPlayerAndGameRoute path='/players/:player/games/:game?' />
+            <SelectedPlayerRoute path='/players/:player?' />
+        </Switch>
 
         <Switch>
             <Route path='/highscores'>

@@ -3,8 +3,8 @@ import { ActionTypes, ThunkAction } from '../actions';
 
 export function fetchGames(): ThunkAction {
     return async (dispatch, getState, { api }) => {
-        const { data: { games: { fetching, data } } } = getState();
-        if (fetching || data)
+        const { data: { games: { fetching, data, error } } } = getState();
+        if (fetching || data || error)
             return;
         dispatch(fetchGamesStarted());
         try {
@@ -32,7 +32,7 @@ export function fetchGamesError(message: string) {
 export function fetchGameAchievements(gameId: number): ThunkAction {
     return async (dispatch, getState, { api }) => {
         const { data: { achievements: { [gameId]: item } } } = getState();
-        if (item?.fetching || item?.data)
+        if (item?.fetching || item?.data || item?.error)
             return;
         dispatch(fetchGameAchievementsStarted(gameId));
         try {
@@ -59,8 +59,8 @@ export function fetchGameAchievementsError(gameId: number, message: string) {
 
 export function fetchHighscores(): ThunkAction {
     return async (dispatch, getState, { api }) => {
-        const { data: { highscores: { fetching, data } } } = getState();
-        if (fetching || data)
+        const { data: { highscores: { fetching, data, error } } } = getState();
+        if (fetching || data || error)
             return;
         dispatch(fetchHighscoresStarted());
         try {
@@ -88,7 +88,7 @@ export function fetchHighscoresError(message: string) {
 export function fetchPlayer(name: string): ThunkAction {
     return async (dispatch, getState, { api }) => {
         const { data: { players: { [name]: item } } } = getState();
-        if (item?.fetching || item?.data)
+        if (item?.fetching || item?.data || item?.error)
             return;
         dispatch(fetchPlayerStarted(name));
         try {
@@ -116,7 +116,7 @@ export function fetchPlayerError(name: string, message: string) {
 export function fetchPlayerAchievements(playerUuid: string): ThunkAction {
     return async (dispatch, getState, { api }) => {
         const { data: { playerAchievements: { [playerUuid]: item } } } = getState();
-        if (item?.fetching || item?.data)
+        if (item?.fetching || item?.data || item?.error)
             return;
         dispatch(fetchPlayerAchievementsStarted(playerUuid));
         try {

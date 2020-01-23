@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Achievement } from '../api';
-import { formatOrbPoints } from '../shared';
+import { formatLargeInteger } from '../shared';
 import './AchievementsList.scss';
 
 export function AchievementsList(props: {
@@ -16,7 +16,7 @@ export function AchievementsList(props: {
             {achievements && achievements.map(achievement =>
                 <Fragment key={achievement.achievementId}>
                     <span className='name'>{achievement.name}</span>
-                    <span className='points'>{formatOrbPoints(achievement.orbPoints!)}</span>
+                    <span className='points'>{formatLargeInteger(achievement.orbPoints!)}</span>
                     <span className='criteria'>{achievement.criteria}</span>
                 </Fragment>
             )}

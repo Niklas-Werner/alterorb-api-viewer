@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { formatOrbPoints } from '../shared';
+import { formatLargeInteger } from '../shared';
 import './HighscoresList.scss';
 
 export function HighscoresList(props: {
@@ -20,7 +20,7 @@ export function HighscoresList(props: {
                 {highscores.map(([name, score], index) => <Fragment key={index}>
                     <span className='rank'>{index + 1}</span>
                     <span className='name'><Link to={`/players/${name}`}>{name}</Link></span>
-                    <span className='score'>{formatOrbPoints(score)}</span>
+                    <span className='score'>{formatLargeInteger(score)}</span>
                 </Fragment>)}
             </div>
         </div>

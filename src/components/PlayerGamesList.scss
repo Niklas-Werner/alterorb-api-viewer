@@ -1,0 +1,36 @@
+@import '../theme';
+
+.player-games-table {
+    display: grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    align-items: center;
+
+    & > span {
+        margin: 0.2em 0.5em;
+    }
+
+    & > .name {
+        grid-column: 2;
+
+        a {
+            color: initial;
+        }
+
+        a:hover {
+            color: $highlight-color;
+        }
+    }
+
+    & > .achievements {
+        grid-column: 3;
+        text-align: right;
+    }
+
+    & > .head {
+        font-weight: bold;
+    }
+
+    & > .content {
+        grid-column: 1 / span 4;
+    }
+}

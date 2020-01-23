@@ -1,15 +1,17 @@
 import { RootAction } from '../actions';
 
 type UIState = {
-    selectedGameId: number | undefined;
     selectedGameJagexName: string | undefined;
     selectedPlayerName: string | undefined;
+    searchPlayerName: string;
+    searchingPlayer: boolean;
 };
 
 const initialState: UIState = {
-    selectedGameId: undefined,
     selectedGameJagexName: undefined,
-    selectedPlayerName: undefined
+    selectedPlayerName: undefined,
+    searchPlayerName: '',
+    searchingPlayer: false
 };
 
 export function uiReducer(state = initialState, action: RootAction): UIState {
@@ -17,13 +19,28 @@ export function uiReducer(state = initialState, action: RootAction): UIState {
         case 'ui.selectGame':
             return {
                 ...state,
-                selectedGameId: action.gameId,
                 selectedGameJagexName: action.jagexName
             };
         case 'ui.selectPlayer':
             return {
                 ...state,
                 selectedPlayerName: action.name
+            };
+        case 'ui.updateSearchPlayerName':
+            return {
+                ...state,
+                searchPlayerName: action.name
+            };
+        case 'ui.searchPlayerStarted':
+            return {
+                ...state,
+                searchingPlayer: true
+            };
+        case 'ui.searchPlayerFinished':
+            return {
+                ...state,
+                searchingPlayer: false,
+                searchPlayerName: ''
             };
         default:
             return state;
