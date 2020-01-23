@@ -96,7 +96,7 @@ export const getSelectedPlayerAchievementsByGame = createSelector(
             return null;
         const counts: Record<number, number> = {};
         for (const achievement of playerAchievementsData?.data)
-            counts[achievement.gameId!] = achievement.gameId! in counts ? counts[achievement.gameId!] + 1 : 0;
+            counts[achievement.gameId!] = (achievement.gameId! in counts ? counts[achievement.gameId!] : 0) + 1;
         return games.map(game => ({
             key: game.jagexName!,
             name: game.fancyName!,
