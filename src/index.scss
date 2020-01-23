@@ -17,3 +17,18 @@ body {
         background-color: $highlight-background-color;
     }
 }
+
+.close-button {
+    display: flex;
+    height: 1em;
+    width: 1em;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: xx-large;
+    color: $highlight-color;
+
+    &::before {
+        content: '×';
+    }
+}

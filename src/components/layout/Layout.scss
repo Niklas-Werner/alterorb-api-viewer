@@ -14,5 +14,19 @@ body {
         flex: 1;
         display: flex;
         flex-direction: column;
+        position: relative;
+
+        & > .sticky-button-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+
+            .sticky-button {
+                position: sticky;
+                top: 0.5em;
+                margin-right: 0.5em;
+            }
+        }
     }
 }

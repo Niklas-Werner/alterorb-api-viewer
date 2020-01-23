@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { AchievementsList } from '../components/AchievementsList';
 import { GamesList } from '../components/GamesList';
 import { Layout } from '../components/layout/Layout';
@@ -17,7 +18,12 @@ export function GamePage() {
     }, [selectedGame]);
 
     return (
-        <Layout title={selectedGame ? `Game: ${selectedGame.fancyName}` : 'Games'}>
+        <Layout
+            title={selectedGame ? `Game: ${selectedGame.fancyName}` : 'Games'}
+            stickyButton={selectedGame &&
+                <Link to='/games' className='close-button' title='Close game' />
+            }
+        >
             <GamesList contentGameKey={selectedGame?.jagexName}>
                 {selectedGameAchievements?.fetching &&
                     <p>Fetching achievements...</p>

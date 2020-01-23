@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Layout } from '../components/layout/Layout';
 import { PlayerAchievementsList } from '../components/PlayerAchievementsList';
 import { PlayerGamesList } from '../components/PlayerGamesList';
 import { SearchPlayerForm } from '../components/SearchPlayerForm';
-import { formatLargeInteger, formatFractionAsPercentage } from '../shared';
+import { formatFractionAsPercentage, formatLargeInteger } from '../shared';
 import { fetchGameAchievements, fetchGames, fetchPlayer, fetchPlayerAchievements } from '../store/data/actions';
 import { getSelectedGame, getSelectedPlayerAndGameAchievementsData, getSelectedPlayerData, getSelectedPlayerInfo, PlayerInfo } from '../store/ui/selectors';
 import { useDispatchEffect } from '../utils';
@@ -27,7 +28,15 @@ export function PlayersPage() {
     }, [selectedPlayerInfo, player, selectedGame]);
 
     return (
-        <Layout title={selectedPlayerInfo ? `Player: ${selectedPlayerInfo.name}` : 'Players'}>
+        <Layout
+            title={selectedPlayerInfo ? `Player: ${selectedPlayerInfo.name}` : 'Players'}
+            stickyButton={selectedPlayerInfo &&
+                <Link
+                    to={selectedGame ? `/players/${selectedPlayerInfo.name}` : '/players'}
+                    className='close-button'
+                    title={selectedGame ? 'Close game' : 'Back to player search'} />
+            }
+        >
             {!selectedPlayerInfo && <>
                 <SearchPlayerForm />
                 <p>No player selected.</p>
