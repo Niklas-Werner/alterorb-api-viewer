@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "yarn run api && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "api": "openapi-generator generate -i https://api.alterorb.net/v1/openapi.yaml -g typescript-fetch -o src/api -c api.json"
