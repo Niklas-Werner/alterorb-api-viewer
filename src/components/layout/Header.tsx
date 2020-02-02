@@ -20,6 +20,9 @@ export function Header() {
                         <li>
                             <NavLink to='/players' activeClassName='active'>Players</NavLink>
                         </li>
+                        <li>
+                            <NavLink to='/settings' className='no-line' activeClassName='active'>⚙</NavLink>
+                        </li>
                     </ul>
                 </nav>
             </div>

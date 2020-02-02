@@ -31,6 +31,14 @@ export function IndexPage() {
                         </p>
                     </Link>
                 </li>
+                <li>
+                    <Link to='/settings'>
+                        <h3>Settings</h3>
+                        <p>
+                            ⚙
+                        </p>
+                    </Link>
+                </li>
             </ul>
         </Layout>
     );

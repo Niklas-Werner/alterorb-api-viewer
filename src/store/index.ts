@@ -2,15 +2,18 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory, History } from 'history';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
+import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import { ExtraThunkArgument } from './actions';
+import { persistedConfigReducer } from './config/persist';
 import { dataReducer } from './data/reducers';
 import { uiReducer } from './ui/reducers';
 
 export const createRootReducer = (history: History) => combineReducers({
     router: connectRouter(history),
     ui: uiReducer,
-    data: dataReducer
+    data: dataReducer,
+    config: persistedConfigReducer
 });
 
 export type RootState = ReturnType<ReturnType<typeof createRootReducer>>;
@@ -40,8 +43,11 @@ export function configureStore(extraThunkArgument: ExtraThunkArgument, preloaded
         )
     );
 
+    const persistor = persistStore(store);
+
     return {
         store,
-        history
+        history,
+        persistor
     };
 }

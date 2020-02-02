@@ -4,6 +4,7 @@ import { GamePage } from './pages/GamesPage';
 import { HighscoresPage } from './pages/HighscoresPage';
 import { IndexPage } from './pages/IndexPage';
 import { PlayersPage } from './pages/PlayersPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { SelectedGameRoute, SelectedPlayerAndGameRoute, SelectedPlayerRoute } from './routes';
 
 export default function App() {
@@ -25,6 +26,10 @@ export default function App() {
 
             <Route path='/players'>
                 <PlayersPage />
+            </Route>
+
+            <Route path='/settings'>
+                <SettingsPage />
             </Route>
 
             <Route>

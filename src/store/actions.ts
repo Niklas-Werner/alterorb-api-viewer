@@ -1,9 +1,10 @@
+import { RouterAction } from 'connected-react-router';
 import { ThunkAction as ReduxThunkAction, ThunkDispatch as ReduxThunkDispatch } from 'redux-thunk';
 import { RootState } from '.';
 import { DefaultApi } from '../api';
+import { ConfigAction } from './config/actions';
 import { DataAction } from './data/actions';
 import { UIAction } from './ui/actions';
-import { RouterAction } from 'connected-react-router';
 
 type __Indices<T> = Exclude<keyof T, keyof any[]>;
 type __ActionTypes_Helper<T extends any[]> = {
@@ -11,7 +12,7 @@ type __ActionTypes_Helper<T extends any[]> = {
 };
 export type ActionTypes<T extends any[]> = __ActionTypes_Helper<T>[keyof __ActionTypes_Helper<T>];
 
-export type RootAction = RouterAction | UIAction | DataAction;
+export type RootAction = RouterAction | UIAction | DataAction | ConfigAction;
 
 export type ExtraThunkArgument = {
     api: DefaultApi;

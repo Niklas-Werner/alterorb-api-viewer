@@ -40,6 +40,11 @@ header {
         color: $highlight-color;
     }
 
+    a.active.no-line {
+        text-decoration: none;
+        background-color: $highlight-background-color;
+    }
+
     h1 {
         margin: 0;
         display: flex;
