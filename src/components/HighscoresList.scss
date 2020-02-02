@@ -17,7 +17,7 @@
         grid-template-columns: auto auto auto;
 
         & > span {
-            margin: 0.2em 0.5em;
+            padding: 0.2em 0.5em;
         }
 
         & > .rank {
@@ -45,6 +45,10 @@
         & > .head {
             font-weight: bold;
             text-align: left;
+        }
+
+        & > .highlight {
+            background-color: $highlight-background-color;
         }
     }
 }

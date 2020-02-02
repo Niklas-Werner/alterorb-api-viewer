@@ -1,29 +1,48 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-import { HighscoresList } from '../components/HighscoresList';
+import { HighscoresList, HighscoresListEntry } from '../components/HighscoresList';
 import { Layout } from '../components/layout/Layout';
-import { fetchHighscores } from '../store/data/actions';
-import { getFetchingHighscores, getHighscores } from '../store/data/selectors';
-import { useActionCreatorEffect } from '../utils';
+import { getOwnName } from '../store/config/selectors';
+import { fetchHighscores, fetchPlayer } from '../store/data/actions';
+import { getFetchingHighscores, getHighscores, getPlayersData } from '../store/data/selectors';
+import { useActionCreatorEffect, useDispatchEffect } from '../utils';
 
 const getHighscoresListEntries = createSelector(
-    [getHighscores],
-    (highscores) => {
+    [getHighscores, getOwnName, getPlayersData],
+    (highscores, ownName, playersData) => {
         if (!highscores)
             return null;
-        return highscores.map<[string, number]>(entry => [
-            entry.displayName!,
-            entry.orbPoints!
-        ]);
+        const entries = highscores.map<HighscoresListEntry>((entry, index) => ({
+            rank: index + 1,
+            name: entry.displayName!,
+            score: entry.orbPoints!,
+            highlight: entry.displayName === ownName
+        }));
+        if (!entries.some(entry => entry.highlight)) {
+            if (playersData && playersData[ownName]?.data) {
+                entries.push({
+                    name: ownName,
+                    score: playersData[ownName]?.data.orbPoints!,
+                    highlight: true
+                });
+            }
+        }
+        return entries;
     }
-)
+);
 
 export function HighscoresPage() {
     const fetchingHighscores = useSelector(getFetchingHighscores);
     const highscoresListEntries = useSelector(getHighscoresListEntries);
+    const ownName = useSelector(getOwnName);
 
     useActionCreatorEffect(fetchHighscores);
+
+    useDispatchEffect(dispatch => {
+        if (ownName)
+            dispatch(fetchPlayer(ownName));
+    }, [ownName]);
 
     return (
         <Layout title='Highscores'>
