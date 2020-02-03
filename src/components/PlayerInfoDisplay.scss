@@ -1,0 +1,18 @@
+.player-info-table {
+    display: grid;
+    grid-template-columns: auto auto;
+
+    & > span {
+        margin: 0.2em 0.5em;
+    }
+
+    & > .key {
+        grid-column: 1;
+        font-weight: bold;
+    }
+
+    & > .value {
+        grid-column: 2;
+        text-align: right;
+    }
+}

@@ -13,7 +13,7 @@ export function configReducer(state = initialState, action: RootAction): ConfigS
         case 'config.setOwnName':
             return {
                 ...state,
-                ownName: action.name
+                ownName: action.name.toLowerCase()
             };
         default:
             return state;

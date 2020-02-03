@@ -29,7 +29,7 @@ export function uiReducer(state = initialState, action: RootAction): UIState {
         case 'ui.updateSearchPlayerName':
             return {
                 ...state,
-                searchPlayerName: action.name
+                searchPlayerName: action.name.toLowerCase()
             };
         case 'ui.searchPlayerStarted':
             return {

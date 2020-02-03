@@ -36,12 +36,6 @@ header {
     }
 
     a.active {
-        text-decoration: underline;
-        color: $highlight-color;
-    }
-
-    a.active.no-line {
-        text-decoration: none;
         background-color: $highlight-background-color;
     }
 

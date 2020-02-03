@@ -10,4 +10,4 @@ export const getHighscores = (state: RootState) => state.data.highscores.data;
 
 export const getPlayersData = (state: RootState) => state.data.players;
 
-export const getPlayerAchievements = (state: RootState) => state.data.playerAchievements;
+export const getPlayerAchievementsData = (state: RootState) => state.data.playerAchievements;

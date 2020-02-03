@@ -1,8 +1,8 @@
-import { createSelector } from 'reselect';
+import { createSelector, Selector } from 'reselect';
 import { RootState } from '..';
-import { getGames, getPlayerAchievements, getAchievementsData, getPlayersData, getFetchingGames } from '../data/selectors';
-import { compareStrings } from '../../shared';
 import { PlayerAchievement } from '../../api';
+import { compareStrings } from '../../shared';
+import { getAchievementsData, getFetchingGames, getGames, getPlayerAchievementsData, getPlayersData } from '../data/selectors';
 
 export const getSortedGames = createSelector(
     [getGames],
@@ -45,7 +45,7 @@ export const getSelectedPlayerData = createSelector(
 );
 
 export const getSelectedPlayerAchievementsData = createSelector(
-    [getPlayerAchievements, getSelectedPlayerData],
+    [getPlayerAchievementsData, getSelectedPlayerData],
     (playerAchievements, selectedPlayerData) => {
         if (!selectedPlayerData?.data)
             return null;
@@ -55,6 +55,7 @@ export const getSelectedPlayerAchievementsData = createSelector(
 
 export interface PlayerInfo {
     name: string;
+    uuid?: string;
     achievements?: number;
     maxAchievements?: number;
     points?: number;
@@ -62,32 +63,37 @@ export interface PlayerInfo {
     fetching: boolean;
 }
 
-export const getSelectedPlayerInfo = createSelector(
-    [getPlayersData, getSelectedPlayerName, getPlayerAchievements, getGames, getFetchingGames],
-    (players, selectedPlayerName, playerAchievements, games, fetchingGames) => {
-        if (!selectedPlayerName)
-            return null;
+export function createPlayerInfoSelector(nameSelector: Selector<RootState, string | undefined>) {
+    return createSelector(
+        [getPlayersData, nameSelector, getPlayerAchievementsData, getGames, getFetchingGames],
+        (players, name, playerAchievements, games, fetchingGames) => {
+            if (!name)
+                return null;
 
-        const playerData = players[selectedPlayerName] ?? null;
-        const achievementsData = playerData?.data ? playerAchievements?.[playerData.data.uuid!] ?? null : null;
+            const playerData = players[name] ?? null;
+            const achievementsData = playerData?.data ? playerAchievements?.[playerData.data.uuid!] ?? null : null;
 
-        const achievements = achievementsData?.data?.length;
-        const maxAchievements = games ? Object.values(games).map(game => game.obtainableAchievements!).reduce((a, b) => a + b) : undefined;
-        const maxPoints = games ? Object.values(games).map(game => game.obtainableOrbPoints!).reduce((a, b) => a + b) : undefined;
+            const achievements = achievementsData?.data?.length;
+            const maxAchievements = games ? Object.values(games).map(game => game.obtainableAchievements!).reduce((a, b) => a + b) : undefined;
+            const maxPoints = games ? Object.values(games).map(game => game.obtainableOrbPoints!).reduce((a, b) => a + b) : undefined;
 
-        const fetching = playerData?.fetching || achievementsData?.fetching || fetchingGames;
+            const fetching = playerData?.fetching || achievementsData?.fetching || fetchingGames;
 
-        const info: PlayerInfo = {
-            name: selectedPlayerName,
-            achievements,
-            maxAchievements,
-            points: playerData?.data?.orbPoints,
-            maxPoints,
-            fetching
-        };
-        return info;
-    }
-);
+            const info: PlayerInfo = {
+                name,
+                uuid: playerData?.data?.uuid,
+                achievements,
+                maxAchievements,
+                points: playerData?.data?.orbPoints,
+                maxPoints,
+                fetching
+            };
+            return info;
+        }
+    );
+}
+
+export const getSelectedPlayerInfo = createPlayerInfoSelector(getSelectedPlayerName);
 
 export const getSelectedPlayerAchievementsByGame = createSelector(
     [getSelectedPlayerAchievementsData, getSortedGames],
