@@ -11,5 +11,7 @@ export function compareStrings(a: string, b: string) {
 }
 
 export function formatFractionAsPercentage(n: number, d: number) {
+    if (d === 0)
+        return '';
     return (n / d * 100).toFixed() + '%';
 }
