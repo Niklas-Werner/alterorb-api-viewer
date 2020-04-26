@@ -38,6 +38,12 @@ export interface Game {
      */
     readonly fancyName?: string;
     /**
+     * If login & online services are enabled for this game
+     * @type {boolean}
+     * @memberof Game
+     */
+    readonly loginEnabled?: boolean;
+    /**
      * How many achievements are obtainable in this game
      * @type {number}
      * @memberof Game
@@ -70,6 +76,7 @@ export function GameFromJSONTyped(json: any, ignoreDiscriminator: boolean): Game
         'id': !exists(json, 'id') ? undefined : json['id'],
         'jagexName': !exists(json, 'jagexName') ? undefined : json['jagexName'],
         'fancyName': !exists(json, 'fancyName') ? undefined : json['fancyName'],
+        'loginEnabled': !exists(json, 'loginEnabled') ? undefined : json['loginEnabled'],
         'obtainableAchievements': !exists(json, 'obtainableAchievements') ? undefined : json['obtainableAchievements'],
         'obtainableOrbCoins': !exists(json, 'obtainableOrbCoins') ? undefined : json['obtainableOrbCoins'],
         'obtainableOrbPoints': !exists(json, 'obtainableOrbPoints') ? undefined : json['obtainableOrbPoints'],
