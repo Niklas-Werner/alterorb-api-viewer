@@ -28,23 +28,27 @@ export function GamesList(props: PropsWithChildren<{
         <span className='head name'>Game</span>
         <span className='head achievements'>Achieve&shy;ments</span>
         <span className='head points'>Orb Points</span>
-        {games.map(game =>
-            <Fragment key={game.jagexName}>
-                <span className='name'>
-                    <Link to={`/games/${game.jagexName}`}>{game.fancyName}</Link>
-                </span>
-                <span className='achievements'>
-                    {game.obtainableAchievements}
-                </span>
-                <span className='points'>
-                    {formatLargeInteger(game.obtainableOrbPoints ?? 0)}
-                </span>
-                {game.jagexName === selectedGameKey &&
-                    <div className='content'>
-                        {children}
-                    </div>
-                }
-            </Fragment>
-        )}
+        {games.map(game => {
+            const unavailableClass = game.loginEnabled ? '' : 'unavailable';
+
+            return (
+                <Fragment key={game.jagexName}>
+                    <span className={`name ${unavailableClass}`}>
+                        <Link to={`/games/${game.jagexName}`}>{game.fancyName}</Link>
+                    </span>
+                    <span className={`achievements ${unavailableClass}`}>
+                        {game.obtainableAchievements}
+                    </span>
+                    <span className={`points ${unavailableClass}`}>
+                        {formatLargeInteger(game.obtainableOrbPoints ?? 0)}
+                    </span>
+                    {game.jagexName === selectedGameKey &&
+                        <div className='content'>
+                            {children}
+                        </div>
+                    }
+                </Fragment>
+            );
+        })}
     </div>;
 }

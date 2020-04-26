@@ -6,6 +6,10 @@ export function formatLargeInteger(num: number) {
     return result.join('\u202f');
 }
 
+export function parenthesize(str: string, parens: boolean) {
+    return parens ? '(' + str + ')' : str;
+}
+
 export function compareStrings(a: string, b: string) {
     return a > b ? 1 : b > a ? -1 : 0;
 }

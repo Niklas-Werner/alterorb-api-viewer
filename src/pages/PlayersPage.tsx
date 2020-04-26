@@ -7,14 +7,14 @@ import { PlayerGamesList } from '../components/PlayerGamesList';
 import { PlayerInfoDisplay } from '../components/PlayerInfoDisplay';
 import { SearchPlayerForm } from '../components/SearchPlayerForm';
 import { fetchGameAchievements, fetchGames, fetchPlayer, fetchPlayerAchievements } from '../store/data/actions';
-import { getSelectedGame, getSelectedPlayerAndGameAchievementsData, getSelectedPlayerInfo } from '../store/ui/selectors';
+import { getSelectedGame, getSelectedPlayerAndGameObtainableAchievementsData, getSelectedPlayerInfo } from '../store/ui/selectors';
 import { useDispatchEffect } from '../utils';
 import './PlayersPage.scss';
 
 export function PlayersPage() {
     const selectedGame = useSelector(getSelectedGame);
     const selectedPlayerInfo = useSelector(getSelectedPlayerInfo);
-    const achievementsData = useSelector(getSelectedPlayerAndGameAchievementsData);
+    const achievementsData = useSelector(getSelectedPlayerAndGameObtainableAchievementsData);
 
     useDispatchEffect(dispatch => {
         if (selectedPlayerInfo)

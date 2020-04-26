@@ -25,6 +25,10 @@
     & > .head {
         font-weight: bold;
     }
+
+    & > span.unobtainable {
+        color: $lowlight-color;
+    }
 }
 
 @media screen and (max-width: 800px) {

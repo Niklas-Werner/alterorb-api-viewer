@@ -95,7 +95,7 @@ export function createPlayerInfoSelector(nameSelector: Selector<RootState, strin
 
 export const getSelectedPlayerInfo = createPlayerInfoSelector(getSelectedPlayerName);
 
-export const getSelectedPlayerAchievementsByGame = createSelector(
+export const getSelectedPlayerObtinableAchievementsByAvailableGame = createSelector(
     [getSelectedPlayerAchievementsData, getSortedGames],
     (playerAchievementsData, games) => {
         if (!playerAchievementsData?.data || !games)
@@ -103,12 +103,14 @@ export const getSelectedPlayerAchievementsByGame = createSelector(
         const counts: Record<number, number> = {};
         for (const achievement of playerAchievementsData?.data)
             counts[achievement.gameId!] = (achievement.gameId! in counts ? counts[achievement.gameId!] : 0) + 1;
-        return games.map(game => ({
-            key: game.jagexName!,
-            name: game.fancyName!,
-            achievements: counts[game.id!] ?? 0,
-            totalAchievements: game.obtainableAchievements!
-        }));
+        return games
+            .filter(game => game.loginEnabled)
+            .map(game => ({
+                key: game.jagexName!,
+                name: game.fancyName!,
+                achievements: counts[game.id!] ?? 0,
+                totalAchievements: game.obtainableAchievements!
+            }));
     }
 );
 
@@ -120,7 +122,7 @@ export interface SelectedPlayerAndGameAchievements {
     unlockTime: string;
 }
 
-export const getSelectedPlayerAndGameAchievementsData = createSelector(
+export const getSelectedPlayerAndGameObtainableAchievementsData = createSelector(
     [getSelectedPlayerAchievementsData, getSelectedGame, getSelectedGameAchievementsData],
     (playerAchievements, game, gameAchievements) => {
         if (playerAchievements?.fetching || gameAchievements?.fetching)
@@ -135,19 +137,21 @@ export const getSelectedPlayerAndGameAchievementsData = createSelector(
                 playerAchievementsMap.set(playerAchievement.id!, playerAchievement);
         }
 
-        return gameAchievements.data.map<SelectedPlayerAndGameAchievements>(achievement => {
-            const playerAchievement = playerAchievementsMap.get(achievement.achievementId!);
+        return gameAchievements.data
+            .filter(achievement => achievement.obtainable)
+            .map<SelectedPlayerAndGameAchievements>(achievement => {
+                const playerAchievement = playerAchievementsMap.get(achievement.achievementId!);
 
-            const unlockTime = playerAchievement?.unlockTimestamp ? new Date(playerAchievement.unlockTimestamp).toLocaleString() : '';
+                const unlockTime = playerAchievement?.unlockTimestamp ? new Date(playerAchievement.unlockTimestamp).toLocaleString() : '';
 
-            return {
-                id: achievement.achievementId!,
-                name: achievement.name!,
-                criteria: achievement.criteria!,
-                unlocked: !!playerAchievement,
-                unlockTime
-            };
-        });
+                return {
+                    id: achievement.achievementId!,
+                    name: achievement.name!,
+                    criteria: achievement.criteria!,
+                    unlocked: !!playerAchievement,
+                    unlockTime
+                };
+            });
     }
 );
 

@@ -2,7 +2,7 @@ import React, { Fragment, PropsWithChildren } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { formatFractionAsPercentage } from '../shared';
-import { getSelectedPlayerAchievementsByGame, getSelectedPlayerName } from '../store/ui/selectors';
+import { getSelectedPlayerName, getSelectedPlayerObtinableAchievementsByAvailableGame } from '../store/ui/selectors';
 import './PlayerGamesList.scss';
 
 export function PlayerGamesList(props: PropsWithChildren<{
@@ -11,7 +11,7 @@ export function PlayerGamesList(props: PropsWithChildren<{
     const { contentGameKey, children } = props;
 
     const selectedPlayerName = useSelector(getSelectedPlayerName);
-    const achievementsByGame = useSelector(getSelectedPlayerAchievementsByGame);
+    const achievementsByGame = useSelector(getSelectedPlayerObtinableAchievementsByAvailableGame);
 
     if (!achievementsByGame)
         return null;

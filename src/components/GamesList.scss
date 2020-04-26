@@ -45,4 +45,12 @@
     & > .content {
         grid-column: 1 / span 6;
     }
+
+    & > span.unavailable {
+        color: $lowlight-color;
+
+        a {
+            color: inherit;
+        }
+    }
 }
