@@ -2,8 +2,8 @@ import { push } from 'redux-first-history';
 import { ActionTypes, ThunkAction } from '../actions';
 import { fetchPlayer } from '../data/actions';
 
-export function selectGame(jagexName: string | undefined) {
-    return { type: 'ui.selectGame', jagexName } as const;
+export function selectGame(id: string | undefined) {
+    return { type: 'ui.selectGame', id } as const;
 }
 
 export function selectPlayer(name: string | undefined) {

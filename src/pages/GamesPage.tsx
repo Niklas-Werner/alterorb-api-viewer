@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AchievementsList } from '../components/AchievementsList';
 import { GamesList } from '../components/GamesList';
 import { Layout } from '../components/layout/Layout';
-import { fetchGameAchievements } from '../store/data/actions';
+import { fetchAchievements } from '../store/data/actions';
 import { getSelectedGame, getSelectedGameAchievementsData } from '../store/ui/selectors';
 import { useDispatchEffect } from '../utils';
 
@@ -13,17 +13,17 @@ export function GamePage() {
 
     useDispatchEffect(dispatch => {
         if (selectedGame)
-            dispatch(fetchGameAchievements(selectedGame.id!));
+            dispatch(fetchAchievements());
     }, [selectedGame]);
 
     return (
         <Layout
-            title={selectedGame ? `Game: ${selectedGame.fancyName}` : 'Games'}
+            title={selectedGame ? `Game: ${selectedGame.name}` : 'Games'}
             stickyButton={selectedGame &&
                 <Link to='/games' className='close-button' title='Close game' />
             }
         >
-            <GamesList contentGameKey={selectedGame?.jagexName}>
+            <GamesList contentGameId={selectedGame?.id}>
                 {selectedGameAchievements?.fetching &&
                     <p>Fetching achievements...</p>
                 }

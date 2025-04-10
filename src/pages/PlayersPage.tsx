@@ -5,7 +5,7 @@ import { PlayerAchievementsList } from '../components/PlayerAchievementsList';
 import { PlayerGamesList } from '../components/PlayerGamesList';
 import { PlayerInfoDisplay } from '../components/PlayerInfoDisplay';
 import { SearchPlayerForm } from '../components/SearchPlayerForm';
-import { fetchGameAchievements, fetchGames, fetchPlayer, fetchPlayerAchievements } from '../store/data/actions';
+import { fetchAchievements, fetchGames, fetchPlayer, fetchPlayerAchievements } from '../store/data/actions';
 import { getSelectedGame, getSelectedPlayerAndGameObtainableAchievementsData, getSelectedPlayerInfo } from '../store/ui/selectors';
 import { useDispatchEffect } from '../utils';
 import './PlayersPage.scss';
@@ -22,7 +22,7 @@ export function PlayersPage() {
             dispatch(fetchPlayerAchievements(selectedPlayerInfo.uuid));
         dispatch(fetchGames());
         if (selectedGame)
-            dispatch(fetchGameAchievements(selectedGame.id!));
+            dispatch(fetchAchievements());
     }, [selectedPlayerInfo, selectedGame]);
 
     return (
@@ -42,7 +42,7 @@ export function PlayersPage() {
             {selectedPlayerInfo &&
                 <PlayerInfoDisplay info={selectedPlayerInfo} />
             }
-            <PlayerGamesList contentGameKey={selectedGame?.jagexName}>
+            <PlayerGamesList contentGameId={selectedGame?.id}>
                 {achievementsData === 'fetching' &&
                     <p>Fetching achievements...</p>
                 }

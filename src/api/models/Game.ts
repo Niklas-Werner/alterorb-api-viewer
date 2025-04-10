@@ -25,36 +25,13 @@ export interface Game {
      * @memberof Game
      */
     readonly id?: number;
-    /**
-     * The game\'s jagex name
-     * @type {string}
-     * @memberof Game
-     */
-    readonly jagexName?: string;
-    /**
-     * The game\'s fancy name
-     * @type {string}
-     * @memberof Game
-     */
-    readonly fancyName?: string;
-    /**
-     * If login & online services are enabled for this game
-     * @type {boolean}
-     * @memberof Game
-     */
-    readonly loginEnabled?: boolean;
+    readonly name?: string;
     /**
      * How many achievements are obtainable in this game
      * @type {number}
      * @memberof Game
      */
     readonly obtainableAchievements?: number;
-    /**
-     * How many orb coins can be obtained in this game
-     * @type {number}
-     * @memberof Game
-     */
-    readonly obtainableOrbCoins?: number;
     /**
      * How many orb points can be obtained in this game
      * @type {number}
@@ -74,11 +51,8 @@ export function GameFromJSONTyped(json: any, ignoreDiscriminator: boolean): Game
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'jagexName': !exists(json, 'jagexName') ? undefined : json['jagexName'],
-        'fancyName': !exists(json, 'fancyName') ? undefined : json['fancyName'],
-        'loginEnabled': !exists(json, 'loginEnabled') ? undefined : json['loginEnabled'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
         'obtainableAchievements': !exists(json, 'obtainableAchievements') ? undefined : json['obtainableAchievements'],
-        'obtainableOrbCoins': !exists(json, 'obtainableOrbCoins') ? undefined : json['obtainableOrbCoins'],
         'obtainableOrbPoints': !exists(json, 'obtainableOrbPoints') ? undefined : json['obtainableOrbPoints'],
     };
 }

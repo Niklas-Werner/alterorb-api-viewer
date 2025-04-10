@@ -14,7 +14,7 @@ export function routeDispatcherComponent(onChange: (dispatch: ThunkDispatch, act
             return () => {
                 onChange(dispatch, false, ...routeParams);
             };
-        }, routeParams);
+        }, [routeParams.join('/')]);
 
         return null;
     }

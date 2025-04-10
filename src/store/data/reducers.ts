@@ -15,7 +15,7 @@ const initialStateDataEntry: StateDataEntry<any> = {
 
 type DataState = {
     games: StateDataEntry<Record<number, Game>>;
-    achievements: Record<number, StateDataEntry<Achievement[]> | undefined>;
+    achievements: StateDataEntry<Achievement[]>;
     highscores: StateDataEntry<HighscoresOrbPoints[]>;
     players: Record<string, StateDataEntry<Account> | undefined>;
     playerAchievements: Record<string, StateDataEntry<PlayerAchievement[]> | undefined>;
@@ -23,7 +23,7 @@ type DataState = {
 
 const initialState: DataState = {
     games: initialStateDataEntry,
-    achievements: {},
+    achievements: initialStateDataEntry,
     highscores: initialStateDataEntry,
     players: {},
     playerAchievements: {}
@@ -58,40 +58,31 @@ export function dataReducer(state = initialState, action: RootAction): DataState
                     data: null
                 }
             };
-        case 'data.fetchGameAchievementsStarted':
+        case 'data.fetchAchievementsStarted':
             return {
                 ...state,
                 achievements: {
-                    ...state.achievements,
-                    [action.gameId]: {
-                        fetching: true,
-                        error: null,
-                        data: null
-                    }
+                    fetching: true,
+                    error: null,
+                    data: null
                 }
             };
-        case 'data.fetchGameAchievementsSuccess':
+        case 'data.fetchAchievementsSuccess':
             return {
                 ...state,
                 achievements: {
-                    ...state.achievements,
-                    [action.gameId]: {
-                        fetching: false,
-                        error: null,
-                        data: action.achievements
-                    }
+                    fetching: false,
+                    error: null,
+                    data: action.achievements
                 }
             };
-        case 'data.fetchGameAchievementsError':
+        case 'data.fetchAchievementsError':
             return {
                 ...state,
                 achievements: {
-                    ...state.achievements,
-                    [action.gameId]: {
-                        fetching: false,
-                        error: action.message,
-                        data: null
-                    }
+                    fetching: false,
+                    error: action.message,
+                    data: null
                 }
             };
         case 'data.fetchHighscoresStarted':

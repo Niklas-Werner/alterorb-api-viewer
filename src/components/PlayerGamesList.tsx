@@ -6,9 +6,9 @@ import { getSelectedPlayerName, getSelectedPlayerObtinableAchievementsByAvailabl
 import './PlayerGamesList.scss';
 
 export function PlayerGamesList(props: PropsWithChildren<{
-    contentGameKey?: string;
+    contentGameId?: number;
 }>) {
-    const { contentGameKey, children } = props;
+    const { contentGameId, children } = props;
 
     const selectedPlayerName = useSelector(getSelectedPlayerName);
     const achievementsByGame = useSelector(getSelectedPlayerObtinableAchievementsByAvailableGame);
@@ -28,7 +28,7 @@ export function PlayerGamesList(props: PropsWithChildren<{
                     <span className='bar-content' style={{ width: formatFractionAsPercentage(achievements, totalAchievements) }}></span>
                     {achievements} / {totalAchievements}
                 </span>
-                {key === contentGameKey &&
+                {key === contentGameId &&
                     <div className='content'>
                         {children}
                     </div>

@@ -1,7 +1,13 @@
-export function formatLargeInteger(num: number) {
+export function formatLargeInteger(num: number | string | undefined) {
+    if (num === undefined)
+        return '';
+    if (typeof num === 'string')
+        num = parseInt(num);
+    if (isNaN(num))
+        return '';
     const str = num.toFixed();
     let result = [];
-    for (let i = str.length; i >= 0; i -= 3)
+    for (let i = str.length; i > 0; i -= 3)
         result.unshift(str.substring(Math.max(0, i - 3), i));
     return result.join('\u202f');
 }

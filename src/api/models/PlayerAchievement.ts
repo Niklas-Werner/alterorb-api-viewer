@@ -36,7 +36,7 @@ export interface PlayerAchievement {
      * @type {string}
      * @memberof PlayerAchievement
      */
-    readonly unlockTimestamp?: string;
+    readonly obtainedAt?: string;
 }
 
 export function PlayerAchievementFromJSON(json: any): PlayerAchievement {
@@ -51,7 +51,7 @@ export function PlayerAchievementFromJSONTyped(json: any, ignoreDiscriminator: b
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'gameId': !exists(json, 'gameId') ? undefined : json['gameId'],
-        'unlockTimestamp': !exists(json, 'unlockTimestamp') ? undefined : json['unlockTimestamp'],
+        'obtainedAt': !exists(json, 'obtainedAt') ? undefined : json['obtainedAt'],
     };
 }
 

@@ -29,32 +29,32 @@ export function fetchGamesError(message: string) {
     return { type: 'data.fetchGamesError', message } as const;
 }
 
-export function fetchGameAchievements(gameId: number): ThunkAction {
+export function fetchAchievements(): ThunkAction {
     return async (dispatch, getState, { api }) => {
-        const { data: { achievements: { [gameId]: item } } } = getState();
-        if (item?.fetching || item?.data || item?.error)
+        const { data: { achievements: { fetching, data, error } } } = getState();
+        if (fetching || data || error)
             return;
-        dispatch(fetchGameAchievementsStarted(gameId));
+        dispatch(fetchAchievementsStarted());
         try {
-            const achievements = await api.listGameAchievements(String(gameId));
-            dispatch(fetchGameAchievementsSuccess(gameId, achievements));
+            const achievements = await api.listAchievements();
+            dispatch(fetchAchievementsSuccess(achievements));
         }
         catch (e) {
-            dispatch(fetchGameAchievementsError(gameId, String(e)));
+            dispatch(fetchAchievementsError(String(e)));
         }
     };
 }
 
-export function fetchGameAchievementsStarted(gameId: number) {
-    return { type: 'data.fetchGameAchievementsStarted', gameId } as const;
+export function fetchAchievementsStarted() {
+    return { type: 'data.fetchAchievementsStarted' } as const;
 }
 
-export function fetchGameAchievementsSuccess(gameId: number, achievements: Achievement[]) {
-    return { type: 'data.fetchGameAchievementsSuccess', gameId, achievements } as const;
+export function fetchAchievementsSuccess(achievements: Achievement[]) {
+    return { type: 'data.fetchAchievementsSuccess', achievements } as const;
 }
 
-export function fetchGameAchievementsError(gameId: number, message: string) {
-    return { type: 'data.fetchGameAchievementsError', gameId, message } as const;
+export function fetchAchievementsError(message: string) {
+    return { type: 'data.fetchAchievementsError', message } as const;
 }
 
 export function fetchHighscores(): ThunkAction {
@@ -146,9 +146,9 @@ export type DataAction = ActionTypes<[
     typeof fetchGamesSuccess,
     typeof fetchGamesError,
 
-    typeof fetchGameAchievementsStarted,
-    typeof fetchGameAchievementsSuccess,
-    typeof fetchGameAchievementsError,
+    typeof fetchAchievementsStarted,
+    typeof fetchAchievementsSuccess,
+    typeof fetchAchievementsError,
 
     typeof fetchHighscoresStarted,
     typeof fetchHighscoresSuccess,

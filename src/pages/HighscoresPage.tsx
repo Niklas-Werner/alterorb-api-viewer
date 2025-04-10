@@ -14,9 +14,9 @@ const getHighscoresListEntries = createSelector(
             return null;
         const entries = highscores.map<HighscoresListEntry>((entry, index) => ({
             rank: index + 1,
-            name: entry.displayName!,
+            name: entry.player!,
             score: entry.orbPoints!,
-            highlight: entry.displayName === ownName
+            highlight: entry.player === ownName
         }));
         if (!entries.some(entry => entry.highlight)) {
             if (playersData && playersData[ownName]?.data) {

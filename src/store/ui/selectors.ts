@@ -9,18 +9,18 @@ export const getSortedGames = createSelector(
     (games) => {
         if (!games)
             return null;
-        return Object.values(games).sort((a, b) => compareStrings(a.fancyName!, b.fancyName!));
+        return Object.values(games).sort((a, b) => compareStrings(a.name!, b.name!));
     }
 );
 
-const getSelectedGameJagexName = (state: RootState) => state.ui.selectedGameJagexName;
+const getSelectedGameId = (state: RootState) => state.ui.selectedGameId;
 
 export const getSelectedGame = createSelector(
-    [getGames, getSelectedGameJagexName],
-    (games, selectedGameJagexName) => {
-        if (!games || !selectedGameJagexName)
+    [getGames, getSelectedGameId],
+    (games, selectedGameId) => {
+        if (!games || !selectedGameId)
             return null;
-        return Object.values(games).find(game => game.jagexName === selectedGameJagexName) ?? null;
+        return Object.values(games).find(game => String(game.id) === selectedGameId) ?? null;
     }
 );
 
@@ -29,7 +29,9 @@ export const getSelectedGameAchievementsData = createSelector(
     (achievementsData, selectedGame) => {
         if (!selectedGame)
             return null;
-        return achievementsData[selectedGame.id!] ?? null;
+        if (achievementsData.data)
+            return { ...achievementsData, data: achievementsData.data.filter(achievement => achievement.gameId === selectedGame.id) };
+        return achievementsData;
     }
 );
 
@@ -104,10 +106,9 @@ export const getSelectedPlayerObtinableAchievementsByAvailableGame = createSelec
         for (const achievement of playerAchievementsData?.data)
             counts[achievement.gameId!] = (achievement.gameId! in counts ? counts[achievement.gameId!] : 0) + 1;
         return games
-            .filter(game => game.loginEnabled)
             .map(game => ({
-                key: game.jagexName!,
-                name: game.fancyName!,
+                key: game.id,
+                name: game.name!,
                 achievements: counts[game.id!] ?? 0,
                 totalAchievements: game.obtainableAchievements!
             }));
@@ -140,12 +141,12 @@ export const getSelectedPlayerAndGameObtainableAchievementsData = createSelector
         return gameAchievements.data
             .filter(achievement => achievement.obtainable)
             .map<SelectedPlayerAndGameAchievements>(achievement => {
-                const playerAchievement = playerAchievementsMap.get(achievement.achievementId!);
+                const playerAchievement = playerAchievementsMap.get(achievement.id!);
 
-                const unlockTime = playerAchievement?.unlockTimestamp ? new Date(playerAchievement.unlockTimestamp).toLocaleString() : '';
+                const unlockTime = playerAchievement?.obtainedAt ? new Date(playerAchievement.obtainedAt).toLocaleString() : '';
 
                 return {
-                    id: achievement.achievementId!,
+                    id: achievement.id!,
                     name: achievement.name!,
                     criteria: achievement.criteria!,
                     unlocked: !!playerAchievement,

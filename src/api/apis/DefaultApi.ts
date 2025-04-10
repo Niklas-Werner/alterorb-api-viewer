@@ -42,15 +42,13 @@ export interface AccountDetailRequest {
 }
 
 export interface HighscoresRequest {
-    mode: HighscoresModeEnum;
 }
 
 export interface ListGameAchievementsRequest {
-    id: string;
 }
 
 export interface SearchAccountsRequest {
-    displayName: string;
+    name: string;
 }
 
 /**
@@ -75,7 +73,7 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/accounts/{uuid}/achievements`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            path: `/achievements/{uuid}`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -126,20 +124,12 @@ export class DefaultApi extends runtime.BaseAPI {
      * Looks up the top highscores entries depending on the selected mode
      */
     async highscoresRaw(requestParameters: HighscoresRequest): Promise<runtime.ApiResponse<Array<HighscoresOrbPoints>>> {
-        if (requestParameters.mode === null || requestParameters.mode === undefined) {
-            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling highscores.');
-        }
-
         const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.mode !== undefined) {
-            queryParameters['mode'] = requestParameters.mode;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/highscores`,
+            path: `/hiscores`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -159,17 +149,13 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Lists all of the available achievements for a game
      */
-    async listGameAchievementsRaw(requestParameters: ListGameAchievementsRequest): Promise<runtime.ApiResponse<Array<Achievement>>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listGameAchievements.');
-        }
-
+    async listAchievementsRaw(requestParameters: ListGameAchievementsRequest): Promise<runtime.ApiResponse<Array<Achievement>>> {
         const queryParameters: runtime.HTTPQuery = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/games/{id}/achievements`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/achievements`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -181,8 +167,8 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Lists all of the available achievements for a game
      */
-    async listGameAchievements(id: string): Promise<Array<Achievement>> {
-        const response = await this.listGameAchievementsRaw({ id: id });
+    async listAchievements(): Promise<Array<Achievement>> {
+        const response = await this.listAchievementsRaw({});
         return await response.value();
     }
 
@@ -216,14 +202,14 @@ export class DefaultApi extends runtime.BaseAPI {
      * Searches for an account via it\'s display name
      */
     async searchAccountsRaw(requestParameters: SearchAccountsRequest): Promise<runtime.ApiResponse<Account>> {
-        if (requestParameters.displayName === null || requestParameters.displayName === undefined) {
-            throw new runtime.RequiredError('displayName','Required parameter requestParameters.displayName was null or undefined when calling searchAccounts.');
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling searchAccounts.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
 
-        if (requestParameters.displayName !== undefined) {
-            queryParameters['displayName'] = requestParameters.displayName;
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -241,8 +227,8 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Searches for an account via it\'s display name
      */
-    async searchAccounts(displayName: string): Promise<Account> {
-        const response = await this.searchAccountsRaw({ displayName: displayName });
+    async searchAccounts(name: string): Promise<Account> {
+        const response = await this.searchAccountsRaw({ name: name });
         return await response.value();
     }
 

@@ -9,9 +9,9 @@ import { useActionCreatorEffect } from '../utils';
 import './GamesList.scss';
 
 export function GamesList(props: PropsWithChildren<{
-    contentGameKey?: string;
+    contentGameId?: number;
 }>) {
-    const { contentGameKey: selectedGameKey, children } = props;
+    const { contentGameId, children } = props;
 
     const fetchingGames = useSelector(getFetchingGames);
     const games = useSelector(getSortedGames);
@@ -29,20 +29,18 @@ export function GamesList(props: PropsWithChildren<{
         <span className='head achievements'>Achieve&shy;ments</span>
         <span className='head points'>Orb Points</span>
         {games.map(game => {
-            const unavailableClass = game.loginEnabled ? '' : 'unavailable';
-
             return (
-                <Fragment key={game.jagexName}>
-                    <span className={`name ${unavailableClass}`}>
-                        <Link to={`/games/${game.jagexName}`}>{game.fancyName}</Link>
+                <Fragment key={game.name}>
+                    <span className='name'>
+                        <Link to={`/games/${game.id}`}>{game.name}</Link>
                     </span>
-                    <span className={`achievements ${unavailableClass}`}>
+                    <span className='achievements'>
                         {game.obtainableAchievements}
                     </span>
-                    <span className={`points ${unavailableClass}`}>
+                    <span className='points'>
                         {formatLargeInteger(game.obtainableOrbPoints ?? 0)}
                     </span>
-                    {game.jagexName === selectedGameKey &&
+                    {game.id === contentGameId &&
                         <div className='content'>
                             {children}
                         </div>

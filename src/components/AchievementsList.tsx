@@ -16,9 +16,9 @@ export function AchievementsList(props: {
             {achievements && achievements.map(achievement => {
                 const unobtainableClass = achievement.obtainable ? '' : 'unobtainable';
                 return (
-                    <Fragment key={achievement.achievementId}>
+                    <Fragment key={achievement.id}>
                         <span className={`name ${unobtainableClass}`}>{achievement.name}</span>
-                        <span className={`points ${unobtainableClass}`}>{parenthesize(formatLargeInteger(achievement.orbPoints!), !achievement.obtainable)}</span>
+                        <span className={`points ${unobtainableClass}`}>{parenthesize(formatLargeInteger(achievement.orbPoints), !achievement.obtainable)}</span>
                         <span className={`criteria ${unobtainableClass}`}>{achievement.criteria}</span>
                     </Fragment>
                 );

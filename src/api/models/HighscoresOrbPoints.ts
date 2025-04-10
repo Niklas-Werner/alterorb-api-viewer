@@ -24,7 +24,7 @@ export interface HighscoresOrbPoints {
      * @type {string}
      * @memberof HighscoresOrbPoints
      */
-    readonly displayName?: string;
+    readonly player?: string;
     /**
      * How many orb points the player has
      * @type {number}
@@ -43,7 +43,7 @@ export function HighscoresOrbPointsFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'displayName': !exists(json, 'displayName') ? undefined : json['displayName'],
+        'player': !exists(json, 'player') ? undefined : json['player'],
         'orbPoints': !exists(json, 'orbPoints') ? undefined : json['orbPoints'],
     };
 }

@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "https://api.alterorb.net/v1".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.alterorb.net".replace(/\/+$/, "");
 
 const isBlob = (value: any) => typeof Blob !== 'undefined' && value instanceof Blob;
 

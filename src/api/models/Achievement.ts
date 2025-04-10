@@ -24,7 +24,7 @@ export interface Achievement {
      * @type {number}
      * @memberof Achievement
      */
-    readonly achievementId?: number;
+    readonly id?: number;
     /**
      * The achievement\'s name.
      * @type {string}
@@ -38,17 +38,11 @@ export interface Achievement {
      */
     readonly criteria?: string;
     /**
-     * How many orb coins does the achievement awards.
-     * @type {number}
-     * @memberof Achievement
-     */
-    readonly orbCoins?: number;
-    /**
      * How many orb points does the achievement awards.
      * @type {number}
      * @memberof Achievement
      */
-    readonly orbPoints?: number;
+    readonly orbPoints?: string;
     /**
      * The id of the game that this achievement belongs to.
      * @type {number}
@@ -73,10 +67,9 @@ export function AchievementFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'achievementId': !exists(json, 'achievementId') ? undefined : json['achievementId'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'criteria': !exists(json, 'criteria') ? undefined : json['criteria'],
-        'orbCoins': !exists(json, 'orbCoins') ? undefined : json['orbCoins'],
         'orbPoints': !exists(json, 'orbPoints') ? undefined : json['orbPoints'],
         'gameId': !exists(json, 'gameId') ? undefined : json['gameId'],
         'obtainable': !exists(json, 'obtainable') ? undefined : json['obtainable'],
