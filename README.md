@@ -8,7 +8,7 @@ You can use the AlterOrb API Viewer at <https://alterorb-api-viewer.now.sh/>.
 
 * Install dependencies with `yarn`.
 * Generate the API client classes with `yarn api`.
-* Use `yarn start` during development.
+* Use `yarn dev` during development.
 * Build with `yarn build`.
 
 ## Contributing

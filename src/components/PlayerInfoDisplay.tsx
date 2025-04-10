@@ -1,4 +1,3 @@
-import React from 'react';
 import { formatFractionAsPercentage, formatLargeInteger } from '../shared';
 import { PlayerInfo } from '../store/ui/selectors';
 import './PlayerInfoDisplay.scss';

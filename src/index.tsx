@@ -1,7 +1,7 @@
-import { ConnectedRouter } from 'connected-react-router';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Configuration, DefaultApi } from './api';
 import App from './App';
@@ -14,13 +14,14 @@ const api = new DefaultApi(new Configuration({
 
 const { store, history, persistor } = configureStore({ api });
 
-ReactDOM.render(
-    <Provider store={store}>
-        <ConnectedRouter history={history}>
-            <PersistGate persistor={persistor}>
-                <App />
-            </PersistGate>
-        </ConnectedRouter>
-    </Provider>,
-    document.getElementById('root')
+createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+        <Provider store={store}>
+            <BrowserRouter>
+                <PersistGate persistor={persistor}>
+                    <App />
+                </PersistGate>
+            </BrowserRouter>
+        </Provider>
+    </StrictMode>
 );

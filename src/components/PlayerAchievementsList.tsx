@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { SelectedPlayerAndGameAchievements } from '../store/ui/selectors';
 import './PlayerAchievementsList.scss';
 

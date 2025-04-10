@@ -1,7 +1,17 @@
 {
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "scssFormatter.tabWidth": 4,
-    "scssFormatter.singleQuote": true,
-    "typescript.preferences.quoteStyle": "single",
-    "javascript.preferences.quoteStyle": "single"
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "scssFormatter.tabWidth": 4,
+  "scssFormatter.singleQuote": true,
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.preferences.quoteStyle": "single",
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports.ts": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.formatOnSave": true
 }

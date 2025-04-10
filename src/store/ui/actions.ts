@@ -1,6 +1,6 @@
+import { push } from 'redux-first-history';
 import { ActionTypes, ThunkAction } from '../actions';
 import { fetchPlayer } from '../data/actions';
-import { push } from 'connected-react-router';
 
 export function selectGame(jagexName: string | undefined) {
     return { type: 'ui.selectGame', jagexName } as const;

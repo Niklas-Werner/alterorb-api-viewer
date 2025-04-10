@@ -1,4 +1,4 @@
-import { RouterAction } from 'connected-react-router';
+import { RouterActions } from 'redux-first-history';
 import { ThunkAction as ReduxThunkAction, ThunkDispatch as ReduxThunkDispatch } from 'redux-thunk';
 import { RootState } from '.';
 import { DefaultApi } from '../api';
@@ -12,7 +12,7 @@ type __ActionTypes_Helper<T extends any[]> = {
 };
 export type ActionTypes<T extends any[]> = __ActionTypes_Helper<T>[keyof __ActionTypes_Helper<T>];
 
-export type RootAction = RouterAction | UIAction | DataAction | ConfigAction;
+export type RootAction = RouterActions | UIAction | DataAction | ConfigAction;
 
 export type ExtraThunkArgument = {
     api: DefaultApi;

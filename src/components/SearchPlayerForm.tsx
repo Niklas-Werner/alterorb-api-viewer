@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { searchPlayer, updateSearchPlayerName } from '../store/ui/actions';
 import { getSearchPlayerName, getSearchingPlayer } from '../store/ui/selectors';

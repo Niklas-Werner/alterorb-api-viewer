@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.scss';
 
@@ -12,21 +11,21 @@ export function Header() {
                 <nav>
                     <ul>
                         <li>
-                            <NavLink to='/highscores' activeClassName='active'>Highscores</NavLink>
+                            <NavLink to='/highscores' className={({ isActive }) => isActive ? 'active' : ''}>Highscores</NavLink>
                         </li>
                         <li>
-                            <NavLink to='/games' activeClassName='active'>Games</NavLink>
+                            <NavLink to='/games' className={({ isActive }) => isActive ? 'active' : ''}>Games</NavLink>
                         </li>
                         <li>
-                            <NavLink to='/players' activeClassName='active'>Players</NavLink>
+                            <NavLink to='/players' className={({ isActive }) => isActive ? 'active' : ''}>Players</NavLink>
                         </li>
                         <li>
-                            <NavLink to='/settings' className='no-line' activeClassName='active'>⚙</NavLink>
+                            <NavLink to='/settings' className={({ isActive }) => isActive ? 'active no-line' : 'no-line'}>⚙</NavLink>
                         </li>
                     </ul>
                 </nav>
             </div>
             <hr />
-        </header>
+        </header >
     );
 }

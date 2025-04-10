@@ -1,16 +1,15 @@
-import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { createBrowserHistory, History } from 'history';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { createLogger } from 'redux-logger';
+import { createBrowserHistory } from 'history';
+import { applyMiddleware, combineReducers, compose, legacy_createStore, Reducer } from 'redux';
+import { createReduxHistoryContext, RouterState } from 'redux-first-history';
 import { persistStore } from 'redux-persist';
-import thunk from 'redux-thunk';
+import { withExtraArgument } from 'redux-thunk';
 import { ExtraThunkArgument } from './actions';
 import { persistedConfigReducer } from './config/persist';
 import { dataReducer } from './data/reducers';
 import { uiReducer } from './ui/reducers';
 
-export const createRootReducer = (history: History) => combineReducers({
-    router: connectRouter(history),
+export const createRootReducer = (routerReducer: Reducer<RouterState>) => combineReducers({
+    router: routerReducer,
     ui: uiReducer,
     data: dataReducer,
     config: persistedConfigReducer
@@ -23,25 +22,25 @@ declare module 'react-redux' {
     }
 }
 
-export function configureStore(extraThunkArgument: ExtraThunkArgument, preloadedState: Partial<RootState> = {}) {
-    const history = createBrowserHistory();
-
-    const logger = createLogger();
+export function configureStore(extraThunkArgument: ExtraThunkArgument) {
+    const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
+        history: createBrowserHistory()
+    });
 
     const middleware = [
-        routerMiddleware(history),
-        thunk.withExtraArgument(extraThunkArgument),
+        routerMiddleware,
+        withExtraArgument(extraThunkArgument),
     ];
-    if (process.env.NODE_ENV !== 'production')
-        middleware.push(logger); // must be last middleware
 
-    const store = createStore(
-        createRootReducer(history),
-        preloadedState,
+    const store = legacy_createStore(
+        createRootReducer(routerReducer),
+        undefined,
         compose(
             applyMiddleware(...middleware)
         )
     );
+
+    const history = createReduxHistory(store);
 
     const persistor = persistStore(store);
 

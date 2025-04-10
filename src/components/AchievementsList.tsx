@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Achievement } from '../api';
 import { formatLargeInteger, parenthesize } from '../shared';
 import './AchievementsList.scss';

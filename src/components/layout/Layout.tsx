@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, ReactNode } from 'react';
+import { PropsWithChildren, ReactNode, useEffect } from 'react';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import './Layout.scss';

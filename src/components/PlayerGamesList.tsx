@@ -1,4 +1,4 @@
-import React, { Fragment, PropsWithChildren } from 'react';
+import { Fragment, PropsWithChildren } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { formatFractionAsPercentage } from '../shared';

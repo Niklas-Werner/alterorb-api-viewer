@@ -1,5 +1,4 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { GamePage } from './pages/GamesPage';
 import { HighscoresPage } from './pages/HighscoresPage';
 import { IndexPage } from './pages/IndexPage';
@@ -7,34 +6,23 @@ import { PlayersPage } from './pages/PlayersPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { SelectedGameRoute, SelectedPlayerAndGameRoute, SelectedPlayerRoute } from './routes';
 
+function Empty() { return null; }
+
 export default function App() {
     return <>
-        <Switch>
-            <SelectedGameRoute path='/games/:game?' />
-            <SelectedPlayerAndGameRoute path='/players/:player/games/:game?' />
-            <SelectedPlayerRoute path='/players/:player?' />
-        </Switch>
+        <Routes>
+            <Route path='/games/:game?' element={<SelectedGameRoute />} />
+            <Route path='/players/:player/games/:game?' element={<SelectedPlayerAndGameRoute />} />
+            <Route path='/players/:player?' element={<SelectedPlayerRoute />} />
+            <Route path='/*' element={<Empty />} />
+        </Routes>
 
-        <Switch>
-            <Route path='/highscores'>
-                <HighscoresPage />
-            </Route>
-
-            <Route path='/games'>
-                <GamePage />
-            </Route>
-
-            <Route path='/players'>
-                <PlayersPage />
-            </Route>
-
-            <Route path='/settings'>
-                <SettingsPage />
-            </Route>
-
-            <Route>
-                <IndexPage />
-            </Route>
-        </Switch>
+        <Routes>
+            <Route path='/highscores/*' element={<HighscoresPage />} />
+            <Route path='/games/*' element={<GamePage />} />
+            <Route path='/players/*' element={<PlayersPage />} />
+            <Route path='/settings/*' element={<SettingsPage />} />
+            <Route path='/*' element={<IndexPage />} />
+        </Routes>
     </>;
 }
